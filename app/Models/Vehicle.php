@@ -22,6 +22,7 @@ class Vehicle extends Model
         collect(explode(' ', $terms))->filter()->each(function ($term) use ($query) {
             $term = '%'.$term.'%';
 
+
             $query->where(function ($query) use ($term) {
                 $query->where('rego', 'like', $term)
                 ->orWhere('make', 'like', $term)
@@ -29,5 +30,4 @@ class Vehicle extends Model
             });
         });
     }
-}
 }
