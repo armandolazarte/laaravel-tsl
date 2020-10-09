@@ -4,20 +4,16 @@ namespace App\Http\Livewire;
 
 use App\Models\Vehicle;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class VehicleTable extends Component
 {
-    public $active = true;
-    public $search;
-    public $sortField;
-    public $asc = true;
-    public $desc = false;
-    public $queryString = ['search', 'active', 'asc'];
+    use WithPagination;
 
     public function render()
     {
         return view('livewire.vehicle-table', [
-            'vehicles' => Vehicle::get()
+            'vehicles' => Vehicle::paginate(5),
         ]);
     }
 }

@@ -16,7 +16,7 @@
                     placeholder="Search" type="search">
             </div>
         </div>
-
+        
         <div class="flex-col space-y-4">
             <x-table>
                 <x-slot name="head">
