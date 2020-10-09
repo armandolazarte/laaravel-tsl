@@ -9,9 +9,21 @@
         <div class="flex-col space-y-4">
             <x-table>
                 <x-slot name="head">
-                    <x-table.heading sortable wire:click="sortBy('rego')">Rego</x-table.heading>
-                    <x-table.heading sortable wire:click="sortBy('make')">Make</x-table.heading>
-                    <x-table.heading sortable wire:click="sortBy('model')">Model</x-table.heading>
+                    <x-table.heading
+                        sortable wire:click="sortBy('rego')"
+                        :direction="$sortField === 'title' ? $sortDirection : null">
+                        Rego
+                    </x-table.heading>
+                    <x-table.heading
+                        sortable wire:click="sortBy('make')"
+                        :direction="$sortField === 'make' ? $sortDirection : null">
+                        Make
+                    </x-table.heading>
+                    <x-table.heading
+                        sortable wire:click="sortBy('model')"
+                        :direction="$sortField === 'model' ? $sortDirection : null">
+                        Model
+                    </x-table.heading>
                     <x-table.heading sortable>Verified</x-table.heading>
                 </x-slot>
 
