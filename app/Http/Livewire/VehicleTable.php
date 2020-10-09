@@ -13,6 +13,10 @@ class VehicleTable extends Component
     public $search = '';
     public $sortField = 'rego';
     public $sortDirection = 'asc';
+    public $showEditModal = false;
+    public Vehicle $editing;
+
+    protected $queryString = ['sortField', 'sortDirection'];
 
     public function sortBy($field)
     {
@@ -22,6 +26,13 @@ class VehicleTable extends Component
             $this->sortDirection = 'asc';
         }
         $this->sortField = $field;
+    }
+
+    public function edit(Vehicle $vehicle)
+    {
+        $this->editing = $vehicle;
+
+        $this->showEditModal = true;
     }
 
     public function render()

@@ -11,7 +11,7 @@
                 <x-slot name="head">
                     <x-table.heading
                         sortable wire:click="sortBy('rego')"
-                        :direction="$sortField === 'title' ? $sortDirection : null">
+                        :direction="$sortField === 'rego' ? $sortDirection : null">
                         Rego
                     </x-table.heading>
                     <x-table.heading
@@ -24,7 +24,7 @@
                         :direction="$sortField === 'model' ? $sortDirection : null">
                         Model
                     </x-table.heading>
-                    <x-table.heading sortable>Verified</x-table.heading>
+                    <x-table.heading></x-table.heading>
                 </x-slot>
 
                 <x-slot name="body">
@@ -40,7 +40,7 @@
                                 {{$vehicle->model}}
                             </x-table.cell>
                             <x-table.cell>
-                                {{$vehicle->verified}}
+                                <x-button.link wire:click="edit({{ $vehicle->id }})">Edit</x-button.link>
                             </x-table.cell>
                         </x-table.row>
                     @empty
@@ -55,4 +55,18 @@
             </div>
         </div>
     </div>
+
+    <x-modal.dialog wire:model.defer="showEditModal">
+        <x-slot name="title">Edit Vehicle</x-slot>
+
+        <x-slot name="content">
+            <x-input.group for="rego" label="Rego">
+                <x-input.text id="rego" />
+            </x-input.group>
+        </x-slot>
+        <x-slot name="footer">
+            <x-button.secondary>Cancel</x-button.secondary>
+            <x-button.primary>Save</x-button.primary>
+        </x-slot>
+    </x-modal.dialog>
 </div>
