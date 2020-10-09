@@ -16,12 +16,17 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             //VEHICLE DETAILS
-            $table->string('rego');
+            $table->string('rego')->unique();
             $table->string('make');
             $table->string('model');
             $table->string('type');
-            $table->string('vin');
+            $table->string('vin')->unique();;
             $table->boolean('verified');
+            $table->foreign('client_id')
+                ->references('id')
+                ->on('clients')
+                ->onDelete('cascade');
+            $table->boolean('active')->default(1);
 
             //AXLE SPACING
             $table->integer('front_a1');
@@ -76,7 +81,7 @@ class CreateVehiclesTable extends Migration
             $table->integer('front_overhang');
             $table->integer('rear_overhang');
             $table->integer('height');
-            $table->integer('weight');
+            $table->integer('width');
             $table->integer('forward_dist');
             $table->integer('deck_length');
             $table->integer('an_rear_deck');
