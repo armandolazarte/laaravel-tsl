@@ -22,7 +22,7 @@ class VehicleFactory extends Factory
     public function definition()
     {
         return [
-            'rego' => $this->faker->jpjNumberPlate,
+            'rego' => $this->faker->userName,
             'make' => $this->faker->randomElement(['Honda', 'Toyota', 'Mitsubishi', 'Mercedes', 'Audi', 'Hyundai']),
             'model' => $this->faker->randomElement(['Truck', 'Trailer', 'Mega Truck', 'Mega Trailer', 'Hauler', 'Mega Hauler']),
             'vin' => $this->faker->swiftBicNumber,
@@ -30,7 +30,7 @@ class VehicleFactory extends Factory
 
             //AXLE SPACING
             'front_a1' => $this->faker->numberBetween(1000, 1500),
-            'front_coupling' => $this->faker->numberBetween(1500, 2000),
+            'front_coupling_axle' => $this->faker->numberBetween(1500, 2000),
             'front_coupling_a1' => $this->faker->numberBetween(10000, 11000),
             'a1a2' => $this->faker->numberBetween(1000, 1300),
             'a3a4' => $this->faker->numberBetween(1000, 1300),
