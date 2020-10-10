@@ -56,17 +56,20 @@
         </div>
     </div>
 
-    <x-modal.dialog wire:model.defer="showEditModal">
-        <x-slot name="title">Edit Vehicle</x-slot>
+    <form wire:submit.prevent="save" action="">
+        <x-modal.dialog wire:model.defer="showEditModal">
+            <x-slot name="title">Edit Vehicle</x-slot>
 
-        <x-slot name="content">
-            <x-input.group for="rego" label="Rego">
-                <x-input.text id="rego" />
-            </x-input.group>
-        </x-slot>
-        <x-slot name="footer">
-            <x-button.secondary>Cancel</x-button.secondary>
-            <x-button.primary>Save</x-button.primary>
-        </x-slot>
-    </x-modal.dialog>
+            <x-slot name="content">
+                <x-input.group for="rego" label="Rego">
+                    <x-input.text wire:model="editing.rego" id="rego" />
+                </x-input.group>
+            </x-slot>
+            <x-slot name="footer">
+                <x-button.secondary>Cancel</x-button.secondary>
+                <x-button.primary type="submit">Save</x-button.primary>
+            </x-slot>
+        </x-modal.dialog>
+    </form>
+
 </div>

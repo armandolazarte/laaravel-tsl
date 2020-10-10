@@ -14,9 +14,13 @@ class VehicleTable extends Component
     public $sortField = 'rego';
     public $sortDirection = 'asc';
     public $showEditModal = false;
-    public Vehicle $editing;
+    public $editing;
 
     protected $queryString = ['sortField', 'sortDirection'];
+
+    protected $rules = [
+        'editing.rego' => 'required'
+    ];
 
     public function sortBy($field)
     {
@@ -28,13 +32,23 @@ class VehicleTable extends Component
         $this->sortField = $field;
     }
 
-    public function edit(Vehicle $vehicle)
+
+
+    public function edit($vehicleID)
     {
+        $vehicle = Vehicle::find($vehicleID);
+
         $this->editing = $vehicle;
 
         $this->showEditModal = true;
     }
 
+    public function save()
+    {
+        $this->validate();
+        $this->editing->save();
+    }
+    
     public function render()
     {
         return view('livewire.vehicle-table', [
