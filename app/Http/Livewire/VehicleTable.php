@@ -19,7 +19,9 @@ class VehicleTable extends Component
     protected $queryString = ['sortField', 'sortDirection'];
 
     protected $rules = [
-        'editing.rego' => 'required'
+        'editing.rego' => 'required',
+        'editing.make' => 'required',
+        'editing.model' => 'required',
     ];
 
     public function sortBy($field)
@@ -32,6 +34,20 @@ class VehicleTable extends Component
         $this->sortField = $field;
     }
 
+    public function create()
+    {
+        $this->editing;
+        $this->showEditModal = true;
+
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->editing->rego = '';
+        $this->editing->make = '';
+        $this->editing->model = '';
+    }
 
 
     public function edit($vehicleID)
@@ -47,8 +63,10 @@ class VehicleTable extends Component
     {
         $this->validate();
         $this->editing->save();
+
+        $this->showEditModal = false;
     }
-    
+
     public function render()
     {
         return view('livewire.vehicle-table', [

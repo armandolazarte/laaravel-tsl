@@ -1,5 +1,8 @@
 <div>
     <div class="py-4">
+        <div class="mb-8">
+            <x-button.primary wire:click="create"><x-icon.plus /> Create Vehicle</x-button.primary>
+        </div>
         <div>
             <div class="w-1/4">
                 <x-input.text wire:model="search" placeholder="Search.."/>
@@ -61,12 +64,23 @@
             <x-slot name="title">Edit Vehicle</x-slot>
 
             <x-slot name="content">
-                <x-input.group for="rego" label="Rego">
-                    <x-input.text wire:model="editing.rego" id="rego" />
+                <x-input.group for="rego" label="Rego" :error="$errors->first('editing.rego')">
+                    <div>
+                        <x-input.text wire:model="editing.rego" id="rego" />
+                    </div>
+
+                </x-input.group>
+
+                <x-input.group paddingless="true" for="make" label="Make" :error="$errors->first('editing.make')">
+                    <x-input.text wire:model="editing.make" id="make" />
+                </x-input.group>
+
+                <x-input.group for="model" label="Model" :error="$errors->first('editing.model')">
+                    <x-input.text wire:model="editing.model" id="model" />
                 </x-input.group>
             </x-slot>
             <x-slot name="footer">
-                <x-button.secondary>Cancel</x-button.secondary>
+                <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
                 <x-button.primary type="submit">Save</x-button.primary>
             </x-slot>
         </x-modal.dialog>
