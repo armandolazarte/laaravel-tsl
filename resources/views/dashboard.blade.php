@@ -5,12 +5,8 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+    <div class="py-12 ml-8 mr-8">
                 <!-- <x-jet-welcome /> -->
-                <livewire:vehicle-table />
-            </div>
-        </div>
+        <livewire:vehicle-table />
     </div>
 </x-app-layout>

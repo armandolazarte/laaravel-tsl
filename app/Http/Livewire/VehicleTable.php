@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Vehicle;
+use App\Models\Verification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,14 +15,20 @@ class VehicleTable extends Component
     public $sortField = 'rego';
     public $sortDirection = 'asc';
     public $showEditModal = false;
+    public $showFilters = false;
     public $editing;
+    public $successMessage;
 
     protected $queryString = ['sortField', 'sortDirection'];
 
     protected $rules = [
+        'editing.vin' => 'required',
         'editing.rego' => 'required',
         'editing.make' => 'required',
         'editing.model' => 'required',
+        'editing.name' => 'required',
+        'editing.phone' => 'required',
+        'editing.email' => 'required',
     ];
 
     public function sortBy($field)
@@ -36,17 +43,9 @@ class VehicleTable extends Component
 
     public function create()
     {
-        $this->editing;
+        $this->editing = Vehicle::make([]);
         $this->showEditModal = true;
-
-        $this->resetForm();
-    }
-
-    public function resetForm()
-    {
-        $this->editing->rego = '';
-        $this->editing->make = '';
-        $this->editing->model = '';
+        //$this->resetForm();
     }
 
 
@@ -63,6 +62,19 @@ class VehicleTable extends Component
     {
         $this->validate();
         $this->editing->save();
+
+        //dd($this->editing->id);
+        Verification::create([
+            'vehicle_id' => $this->editing->id,
+            'type' => 'Landata'
+        ]);
+
+        Verification::create([
+            'vehicle_id' => $this->editing->id,
+            'type' => 'TSL'
+        ]);
+
+        $this->successMessage =  'Comment posted!';
 
         $this->showEditModal = false;
     }

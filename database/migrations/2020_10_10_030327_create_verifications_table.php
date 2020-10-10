@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVehiclesTable extends Migration
+class CreateVerificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,12 @@ class CreateVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('verifications', function (Blueprint $table) {
             $table->id();
             //VEHICLE DETAILS
-            $table->string('rego')->unique();
-            $table->string('make');
-            $table->string('model');
-            $table->string('type')->nullable();
-            $table->string('vin')->unique();
+            $table->string('type');
             $table->boolean('verified')->default(0);
-            $table->foreignId('client_id')->nullable()->index();
-            // $table->foreignId('client_id')
-            //     ->references('id')
-            //     ->on('clients')
-            //     ->onDelete('cascade');
-
-            $table->string('name')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
-
-            $table->boolean('active')->default(1);
+            $table->foreignId('vehicle_id')->nullable()->index();
 
             //AXLE SPACING
             $table->integer('front_coupling_axle')->nullable();
@@ -159,6 +145,6 @@ class CreateVehiclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('verifications');
     }
 }
