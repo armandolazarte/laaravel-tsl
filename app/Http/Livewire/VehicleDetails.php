@@ -10,7 +10,7 @@ class VehicleDetails extends Component
 
     public $vehicle;
     public $currentMenu = 'Details';
-    public $step = 3;
+    public $step = 1;
 
     public function mount($id)
     {

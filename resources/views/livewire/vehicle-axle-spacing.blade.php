@@ -1,5 +1,5 @@
 
-<div class="py-4  mx-auto mt-10 w-5/6">
+<div class="py-4 mt-10 w-full mx-auto ml-4">
     <div class="space-y-4">
         <x-table>
             <x-slot name="head">
