@@ -77,6 +77,8 @@ class VehicleTable extends Component
         $this->successMessage =  'Comment posted!';
 
         $this->showEditModal = false;
+
+        $this->dispatchBrowserEvent('notify', 'Vehicle updated!');
     }
 
     public function render()
