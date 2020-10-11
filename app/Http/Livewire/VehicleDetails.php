@@ -9,6 +9,7 @@ class VehicleDetails extends Component
 {
 
     public $vehicle;
+    public $currentMenu = 'Details';
 
     public function mount($id)
     {
@@ -16,6 +17,7 @@ class VehicleDetails extends Component
 
         $this->vehicle = $vehicle;
     }
+
     public function render()
     {
         return view('livewire.vehicle-details');
