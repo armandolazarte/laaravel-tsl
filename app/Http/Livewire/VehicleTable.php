@@ -19,6 +19,7 @@ class VehicleTable extends Component
     public $editing;
     public $successMessage;
     public $selectPage = false;
+    public $selectAll = false;
     public $selected = [];
 
     protected $queryString = ['sortField', 'sortDirection'];
@@ -40,6 +41,11 @@ class VehicleTable extends Component
         } else {
             $this->selected = [];
         }
+    }
+
+    public function selectAll()
+    {
+        $this->selectAll = true;
     }
 
     public function sortBy($field)

@@ -60,6 +60,18 @@
 
 
                 <x-slot name="body">
+                    @if ($selectPage)
+                    <x-table.row class="bg-cool-gray-200" wire:key="row-message">
+                        <x-table.cell colspan="5">
+                            @unless ($selectAll)
+                            You selected <strong>{{ $vehicles->count() }}</strong> vehicles, do you want to select all <strong>{{ $vehicles->total() }}</strong> vehicles?
+                            <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select all</x-button.link>
+                            @else
+                            You are currently selecting all <strong>{{ $vehicles->total() }}</strong> vehicles
+                            @endif
+                        </x-table.cell>
+                    </x-table.row>
+                    @endif
                     @forelse ($vehicles as $vehicle)
                     <x-table.row wire:key="row-{{ $vehicle->id}}">
 
