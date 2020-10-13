@@ -18,6 +18,7 @@ class VehicleTable extends Component
     public $showFilters = false;
     public $editing;
     public $successMessage;
+    public $selectPage = false;
     public $selected = [];
 
     protected $queryString = ['sortField', 'sortDirection'];
@@ -31,6 +32,15 @@ class VehicleTable extends Component
         'editing.phone' => 'required',
         'editing.email' => 'required',
     ];
+
+    public function updatedSelectPage($value)
+    {
+        if($value) {
+            $this->selected = $this->vehicles->pluck('id');
+        } else {
+            $this->selected = [];
+        }
+    }
 
     public function sortBy($field)
     {
@@ -96,13 +106,26 @@ class VehicleTable extends Component
         $this->dispatchBrowserEvent('notify', 'Vehicle updated!');
     }
 
+    public function getVehiclesProperty()
+    {
+
+        return Vehicle::query()
+            ->search($this->search)
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate(5);
+    }
+
     public function render()
     {
         return view('livewire.vehicle-table', [
-            'vehicles' => Vehicle::query()
-                ->search($this->search)
-                ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(5),
+            'vehicles' => $this->vehicles
         ]);
+
+        // return view('livewire.vehicle-table', [
+        //     'vehicles' => Vehicle::query()
+        //         ->search($this->search)
+        //         ->orderBy($this->sortField, $this->sortDirection)
+        //         ->paginate(5),
+        // ]);
     }
 }

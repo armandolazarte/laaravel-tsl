@@ -43,7 +43,7 @@
             <x-table>
                 <x-slot name="head">
                     <x-table.heading class="pr-0 w-8">
-                        <x-input.checkbox />
+                        <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
                     <x-table.heading sortable wire:click="sortBy('rego')" :direction="$sortField === 'rego' ? $sortDirection : null">
                         Rego
