@@ -18,6 +18,7 @@ class VehicleTable extends Component
     public $showFilters = false;
     public $editing;
     public $successMessage;
+    public $selected = [];
 
     protected $queryString = ['sortField', 'sortDirection'];
 

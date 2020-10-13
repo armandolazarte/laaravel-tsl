@@ -1,73 +1,88 @@
 <div>
     <div class="py-4">
         <div class="mb-8">
-            <x-button.primary wire:click="create"><x-icon.plus /> Create Vehicle</x-button.primary>
+            <x-button.primary wire:click="create">
+                <x-icon.plus /> Create Vehicle</x-button.primary>
         </div>
-        <div>
-            <div class="flex w-4/8 space-x-4">
-                <x-input.text wire:model="search" placeholder="Search.."/>
-                <x-button.link wire:click="$toggle('showFilters')">
-                    @if ($showFilters) Hide @endif Advanced Search
-                </x-button.link>
+        <div class="flex w-full items-center">
+            <div>
+                <div class="flex flex-grow w-4/8 space-x-4">
+                    <x-input.text wire:model="search" placeholder="Search.." />
+                    <x-button.link wire:click="$toggle('showFilters')">
+                        @if ($showFilters) Hide @endif Advanced Search
+                    </x-button.link>
+                </div>
+            </div>
+
+            <div class="flex align-end space-x-2 ml-8">
+                <x-dropdown label="Bulk Actions">
+                    <x-dropdown.item class="flex items-center space-x-2">
+                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span></x-dropdown.item>
+                    <x-dropdown.item class="flex items-center space-x-2">
+                        <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span></x-dropdown.item>
+                </x-dropdown>
             </div>
         </div>
 
+
         <div>
             @if ($showFilters)
-                <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
-                    <div class="w-1/2 pr-2 space-y-4">
-                    </div>
-
+            <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
+                <div class="w-1/2 pr-2 space-y-4">
                 </div>
+
+            </div>
             @endif
         </div>
 
         <div class="flex-col space-y-4">
             <x-table>
                 <x-slot name="head">
-                    <x-table.heading
-                        sortable wire:click="sortBy('rego')"
-                        :direction="$sortField === 'rego' ? $sortDirection : null">
+                    <x-table.heading class="pr-0 w-8">
+                        <x-input.checkbox />
+                    </x-table.heading>
+                    <x-table.heading sortable wire:click="sortBy('rego')" :direction="$sortField === 'rego' ? $sortDirection : null">
                         Rego
                     </x-table.heading>
 
-                    <x-table.heading
-                        sortable wire:click="sortBy('make')"
-                        :direction="$sortField === 'make' ? $sortDirection : null">
+                    <x-table.heading sortable wire:click="sortBy('make')" :direction="$sortField === 'make' ? $sortDirection : null">
                         Make
                     </x-table.heading>
-                    <x-table.heading
-                        sortable wire:click="sortBy('model')"
-                        :direction="$sortField === 'model' ? $sortDirection : null">
+                    <x-table.heading sortable wire:click="sortBy('model')" :direction="$sortField === 'model' ? $sortDirection : null">
                         Model
                     </x-table.heading>
                     <x-table.heading></x-table.heading>
                 </x-slot>
 
+
                 <x-slot name="body">
                     @forelse ($vehicles as $vehicle)
-                        <x-table.row>
+                    <x-table.row wire:key="row-{{ $vehicle->id}}">
 
-                                <x-table.cell>
-                                    <a href="{{ route('vehicle-details', $vehicle->id) }}">
-                                        {{$vehicle->rego}}
-                                    </a>
-                                </x-table.cell>
+                        <x-table.cell class="pr-0">
+                            <x-input.checkbox wire:model="selected" value="{{ $vehicle->id }}" />
+                        </x-table.cell>
 
-                            <x-table.cell>
-                                {{$vehicle->make}}
-                            </x-table.cell>
-                            <x-table.cell>
-                                {{$vehicle->model}}
-                            </x-table.cell>
-                            <x-table.cell>
-                                <x-button.link wire:click="edit({{ $vehicle->id }})">Edit</x-button.link>
-                            </x-table.cell>
-                        </x-table.row>
+                        <x-table.cell>
+                            <a href="{{ route('vehicle-details', $vehicle->id) }}">
+                                {{$vehicle->rego}}
+                            </a>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            {{$vehicle->make}}
+                        </x-table.cell>
+                        <x-table.cell>
+                            {{$vehicle->model}}
+                        </x-table.cell>
+                        <x-table.cell>
+                            <x-button.link wire:click="edit({{ $vehicle->id }})">Edit</x-button.link>
+                        </x-table.cell>
+                    </x-table.row>
                     @empty
-                        <x-table.row>
-                            <x-table.cell colspan="4">No results found</x-table.cell>
-                        </x-table.row>
+                    <x-table.row>
+                        <x-table.cell colspan="4">No results found</x-table.cell>
+                    </x-table.row>
                     @endforelse
                 </x-slot>
             </x-table>
@@ -83,12 +98,12 @@
 
             <x-slot name="content">
 
-            <div class="flex mb-8">
-                <div class="w-4/6">
-                    <x-input.group  inline="true" marginRight="true" for="rego" label="Rego" :error="$errors->first('editing.rego')">
+                <div class="flex mb-8">
+                    <div class="w-4/6">
+                        <x-input.group inline="true" marginRight="true" for="rego" label="Rego" :error="$errors->first('editing.rego')">
                             <x-input.text wire:model="editing.rego" id="rego" />
-                    </x-input.group>
-                </div>
+                        </x-input.group>
+                    </div>
 
 
                     <x-input.group inline="true" marginLeft="true" for="vin" label="Vin" :error="$errors->first('editing.vin')">
@@ -112,8 +127,8 @@
                     <x-input.group inline="true" marginRight="true" for="name" label="Name" :error="$errors->first('editing.name')">
                         <x-input.text wire:model="editing.name" id="name" />
                     </x-input.group>
-                    <x-input.group inline="true" marginLeft="true"  for="phone" label="Phone" :error="$errors->first('editing.phone')">
-                            <x-input.text wire:model="editing.phone" id="phone" />
+                    <x-input.group inline="true" marginLeft="true" for="phone" label="Phone" :error="$errors->first('editing.phone')">
+                        <x-input.text wire:model="editing.phone" id="phone" />
                     </x-input.group>
 
                 </div>
