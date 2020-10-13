@@ -36,7 +36,7 @@ class VehicleTable extends Component
     public function updatedSelectPage($value)
     {
         if($value) {
-            $this->selected = $this->vehicles->pluck('id');
+            $this->selected = $this->vehicles->pluck('id')->map(fn($id) => (string) $id);
         } else {
             $this->selected = [];
         }
