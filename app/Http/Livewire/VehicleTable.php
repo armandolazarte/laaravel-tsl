@@ -42,6 +42,13 @@ class VehicleTable extends Component
         $this->sortField = $field;
     }
 
+    public function exportSelected()
+    {
+        return response()->streamDownload(function () {
+            echo Vehicle::whereKey($this->selected)->toCsv();
+        }, 'vehicles.csv');
+    }
+
     public function deleteSelected()
     {
         $vehicles = Vehicle::whereKey($this->selected);
