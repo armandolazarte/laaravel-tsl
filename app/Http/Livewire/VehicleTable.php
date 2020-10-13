@@ -42,6 +42,13 @@ class VehicleTable extends Component
         $this->sortField = $field;
     }
 
+    public function deleteSelected()
+    {
+        $vehicles = Vehicle::whereKey($this->selected);
+
+        $vehicles->delete();
+    }
+
     public function create()
     {
         $this->editing = Vehicle::make([]);
