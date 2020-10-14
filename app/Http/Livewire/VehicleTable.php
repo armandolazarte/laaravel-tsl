@@ -13,6 +13,7 @@ class VehicleTable extends Component
 
     public $search = '';
     public $sortField = 'rego';
+    public $showDeleteModal = false;
     public $sortDirection = 'asc';
     public $showEditModal = false;
     public $showFilters = false;
@@ -34,10 +35,16 @@ class VehicleTable extends Component
         'editing.email' => 'required',
     ];
 
+    public function updatedSelected()
+    {
+        $this->selectAll = false;
+        $this->selectPage = false;
+    }
+
     public function updatedSelectPage($value)
     {
-        if($value) {
-            $this->selected = $this->vehicles->pluck('id')->map(fn($id) => (string) $id);
+        if ($value) {
+            $this->selected = $this->vehicles->pluck('id')->map(fn ($id) => (string) $id);
         } else {
             $this->selected = [];
         }
@@ -50,7 +57,7 @@ class VehicleTable extends Component
 
     public function sortBy($field)
     {
-        if($this->sortField === $field) {
+        if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortDirection = 'asc';
@@ -61,15 +68,17 @@ class VehicleTable extends Component
     public function exportSelected()
     {
         return response()->streamDownload(function () {
-            echo Vehicle::whereKey($this->selected)->toCsv();
+            echo (clone $this->vehiclesQuery)
+                ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected))
+                ->toCsv();
         }, 'vehicles.csv');
     }
 
     public function deleteSelected()
     {
-        $vehicles = Vehicle::whereKey($this->selected);
-
-        $vehicles->delete();
+        (clone $this->vehiclesQuery)
+                ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected))
+                ->delete();
     }
 
     public function create()
@@ -112,17 +121,24 @@ class VehicleTable extends Component
         $this->dispatchBrowserEvent('notify', 'Vehicle updated!');
     }
 
-    public function getVehiclesProperty()
+    public function getVehiclesQueryProperty()
     {
-
         return Vehicle::query()
             ->search($this->search)
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate(5);
+            ->orderBy($this->sortField, $this->sortDirection);
+    }
+
+    public function getVehiclesProperty()
+    {
+        return $this->vehiclesQuery->paginate(5);
     }
 
     public function render()
     {
+        if ($this->selectAll) {
+            $this->selected = $this->vehicles->pluck('id')->map(fn ($id) => (string) $id);
+        }
+
         return view('livewire.vehicle-table', [
             'vehicles' => $this->vehicles
         ]);

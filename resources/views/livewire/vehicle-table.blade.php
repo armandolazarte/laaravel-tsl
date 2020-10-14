@@ -20,15 +20,13 @@
                         <x-icon.download class="text-cool-gray-400" />
                         <span>Export</span>
                     </x-dropdown.item>
-                    <x-dropdown.item type="button" wire:click="deleteSelected" class="flex items-center space-x-2">
+                    <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" wire:click="deleteSelected" class="flex items-center space-x-2">
                         <x-icon.trash class="text-cool-gray-400" />
                         <span>Delete</span>
                     </x-dropdown.item>
                 </x-dropdown>
             </div>
         </div>
-
-
         <div>
             @if ($showFilters)
             <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
@@ -64,8 +62,10 @@
                     <x-table.row class="bg-cool-gray-200" wire:key="row-message">
                         <x-table.cell colspan="5">
                             @unless ($selectAll)
-                            You selected <strong>{{ $vehicles->count() }}</strong> vehicles, do you want to select all <strong>{{ $vehicles->total() }}</strong> vehicles?
-                            <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select all</x-button.link>
+                            <div>
+                                <span>You selected <strong>{{ $vehicles->count() }}</strong> vehicles, do you want to select all <strong>{{ $vehicles->total() }}</strong> vehicles?</span>
+                                <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select all</x-button.link>
+                            </div>
                             @else
                             You are currently selecting all <strong>{{ $vehicles->total() }}</strong> vehicles
                             @endif
@@ -107,6 +107,22 @@
             </div>
         </div>
     </div>
+
+    <form wire:submit.prevent="deleteSelected" action="">
+        <x-modal.confirmation wire:model.defer="showDeleteModal">
+            <x-slot name="title">Delete Vehicles</x-slot>
+
+            <x-slot name="content">
+                Are you sure you want to delete these vehicles?
+            </x-slot>
+            <x-slot name="footer">
+                <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button.secondary>
+                <x-button.primary type="submit">Delete</x-button.primary>
+            </x-slot>
+
+
+        </x-modal.dialog>
+    </form>
 
     <form wire:submit.prevent="save" action="">
         <x-modal.dialog wire:model.defer="showEditModal">
