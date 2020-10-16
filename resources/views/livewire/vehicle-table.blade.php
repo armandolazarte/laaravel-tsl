@@ -20,9 +20,8 @@
                         <x-icon.download class="text-cool-gray-400" />
                         <span>Export</span>
                     </x-dropdown.item>
-                    <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" wire:click="deleteSelected" class="flex items-center space-x-2">
-                        <x-icon.trash class="text-cool-gray-400" />
-                        <span>Delete</span>
+                    <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" class="flex items-center space-x-2">
+                        <x-icon.trash class="text-cool-gray-400"/> <span>Delete</span>
                     </x-dropdown.item>
                 </x-dropdown>
             </div>
@@ -38,6 +37,7 @@
         </div>
 
         <div class="flex-col space-y-4">
+
             <x-table>
                 <x-slot name="head">
                     <x-table.heading class="pr-0 w-8">
@@ -55,7 +55,6 @@
                     </x-table.heading>
                     <x-table.heading></x-table.heading>
                 </x-slot>
-
 
                 <x-slot name="body">
                     @if ($selectPage)
