@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Datatable;
+namespace App\Http\Livewire\DataTable;
 
 trait WithSorting
 {
     public $search = '';
     public $sortField = 'rego';
+    public $sortDirection = 'asc';
 
     public function sortBy($field)
     {

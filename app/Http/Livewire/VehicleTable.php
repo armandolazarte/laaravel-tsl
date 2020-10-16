@@ -6,22 +6,19 @@ use App\Models\Vehicle;
 use Livewire\Component;
 use App\Models\Verification;
 use Livewire\WithPagination;
-use App\Http\Livewire\Datatable\WithSorting;
+use App\Http\Livewire\DataTable\WithSorting;
+use App\Http\Livewire\DataTable\WithBulkActions;
 
 class VehicleTable extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination, WithSorting, WithBulkActions;
 
 
     public $showDeleteModal = false;
-    public $sortDirection = 'asc';
     public $showEditModal = false;
     public $showFilters = false;
     public $editing;
     public $successMessage;
-    public $selectPage = false;
-    public $selectAll = false;
-    public $selected = [];
 
     protected $queryString = ['sortField', 'sortDirection'];
 
@@ -35,32 +32,14 @@ class VehicleTable extends Component
         'editing.email' => 'required',
     ];
 
-    public function updatedSelected()
-    {
-        $this->selectAll = false;
-        $this->selectPage = false;
-    }
 
-    public function updatedSelectPage($value)
-    {
-        if ($value) {
-            $this->selected = $this->vehicles->pluck('id')->map(fn ($id) => (string) $id);
-        } else {
-            $this->selected = [];
-        }
-    }
-
-    public function selectAll()
-    {
-        $this->selectAll = true;
-    }
 
 
 
     public function exportSelected()
     {
         return response()->streamDownload(function () {
-            echo (clone $this->vehiclesQuery)
+            echo (clone $this->rowsQuery)
                 ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected))
                 ->toCsv();
         }, 'vehicles.csv');
@@ -68,7 +47,7 @@ class VehicleTable extends Component
 
     public function deleteSelected()
     {
-        (clone $this->vehiclesQuery)
+        (clone $this->rowsQuery)
                 ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected))
                 ->delete();
 
@@ -114,29 +93,27 @@ class VehicleTable extends Component
         $this->dispatchBrowserEvent('notify', 'Vehicle updated!');
     }
 
-    public function getVehiclesQueryProperty()
+    public function getRowsQueryProperty()
     {
         $query =  Vehicle::query()
             ->search($this->search);
 
-        return $this->applySorting($query)
-
-
+        return $this->applySorting($query);
     }
 
-    public function getVehiclesProperty()
+    public function getRowsProperty()
     {
-        return $this->vehiclesQuery->paginate(5);
+        return $this->rowsQuery->paginate(5);
     }
 
     public function render()
     {
         if ($this->selectAll) {
-            $this->selected = $this->vehicles->pluck('id')->map(fn ($id) => (string) $id);
+            $this->selected = $this->rows->pluck('id')->map(fn ($id) => (string) $id);
         }
 
         return view('livewire.vehicle-table', [
-            'vehicles' => $this->vehicles
+            'vehicles' => $this->rows
         ]);
 
     }
