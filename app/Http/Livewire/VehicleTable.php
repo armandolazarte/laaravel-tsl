@@ -39,17 +39,13 @@ class VehicleTable extends Component
     public function exportSelected()
     {
         return response()->streamDownload(function () {
-            echo (clone $this->rowsQuery)
-                ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected))
-                ->toCsv();
+            echo $this->selectedRowsQuery->toCsv();
         }, 'vehicles.csv');
     }
 
     public function deleteSelected()
     {
-        (clone $this->rowsQuery)
-                ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected))
-                ->delete();
+        $this->selectedRowsQuery->delete();
 
         $this->showDeleteModal = false;
     }

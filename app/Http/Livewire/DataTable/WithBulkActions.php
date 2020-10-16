@@ -27,4 +27,10 @@ trait WithBulkActions
     {
         $this->selectAll = true;
     }
+
+    public function getSeletedRowsQuery()
+    {
+        return (clone $this->rowsQuery)
+        ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected));
+    }
 }
