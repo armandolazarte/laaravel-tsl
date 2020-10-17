@@ -32,10 +32,6 @@ class VehicleTable extends Component
         'editing.email' => 'required',
     ];
 
-
-
-
-
     public function exportSelected()
     {
         return response()->streamDownload(function () {
@@ -105,7 +101,7 @@ class VehicleTable extends Component
     public function render()
     {
         if ($this->selectAll) {
-            $this->selected = $this->rows->pluck('id')->map(fn ($id) => (string) $id);
+            $this->selectPageRows();
         }
 
         return view('livewire.vehicle-table', [
