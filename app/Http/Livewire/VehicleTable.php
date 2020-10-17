@@ -8,10 +8,13 @@ use App\Models\Verification;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithBulkActions;
+use App\Http\Livewire\DataTable\WithPerPagePagination;
 
 class VehicleTable extends Component
 {
-    use WithPagination, WithSorting, WithBulkActions;
+    use WithPerPagePagination, WithPagination, WithSorting, WithBulkActions;
+
+
 
     public $search = '';
     public $showDeleteModal = false;
@@ -95,7 +98,7 @@ class VehicleTable extends Component
 
     public function getRowsProperty()
     {
-        return $this->rowsQuery->paginate(5);
+        return $this->applyPagination($this->rowsQuery);
     }
 
     public function render()
