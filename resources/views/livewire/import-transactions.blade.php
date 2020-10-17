@@ -19,7 +19,7 @@
                     <x-input.group for="title" label="Title" :error="$errors->first('fieldColumnMap.title')">
                         <x-input.select wire:model="fieldColumnMap.title" id="title">
                             <option value="" disabled>Select Column...</option>
-                            @foreach ([] as $column)
+                            @foreach (columns as $column)
                                 <option>{{ $column }}</option>
                             @endforeach
                         </x-input.select>
