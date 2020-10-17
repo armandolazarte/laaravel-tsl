@@ -1,8 +1,15 @@
 <div>
     <div class="py-4">
-        <div class="mb-8">
-            <x-button.primary wire:click="create">
-                <x-icon.plus /> Create Vehicle</x-button.primary>
+        <div class="flex items-centermb-8">
+            <div>
+                <x-button.primary wire:click="create">
+                    <x-icon.plus /> Create Vehicle
+                </x-button.primary>
+            </div>
+            <div>
+                <livewire:import-transactions />
+            </div>
+
         </div>
         <div class="flex w-full items-center">
             <div>
