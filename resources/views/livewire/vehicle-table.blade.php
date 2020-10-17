@@ -6,7 +6,7 @@
         </div>
         <div class="flex w-full items-center">
             <div>
-                <div class="flex flex-grow w-4/8 space-x-4">
+                <div class="flex items-center w-4/8 space-x-4">
                     <x-input.text wire:model="search" placeholder="Search.." />
                     <x-button.link wire:click="$toggle('showFilters')">
                         @if ($showFilters) Hide @endif Advanced Search
@@ -15,6 +15,13 @@
             </div>
 
             <div class="flex align-end space-x-2 ml-8">
+                <x-input.group borderless paddingless for="perPage" label="Per Page">
+                    <x-input.select wire:model="perPage" id="perPage">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </x-input.select>
+                </x-input.group>
                 <x-dropdown label="Bulk Actions">
                     <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
                         <x-icon.download class="text-cool-gray-400" />
@@ -43,16 +50,10 @@
                     <x-table.heading class="pr-0 w-8">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable wire:click="sortBy('rego')" :direction="$sortField === 'rego' ? $sortDirection : null">
-                        Rego
-                    </x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('rego')" :direction="$sorts['rego'] ?? null" class="w-full">Rego</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('make')" :direction="$sorts['make'] ?? null">Make</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('model')" :direction="$sorts['model'] ?? null">Model</x-table.heading>
 
-                    <x-table.heading sortable wire:click="sortBy('make')" :direction="$sortField === 'make' ? $sortDirection : null">
-                        Make
-                    </x-table.heading>
-                    <x-table.heading sortable wire:click="sortBy('model')" :direction="$sortField === 'model' ? $sortDirection : null">
-                        Model
-                    </x-table.heading>
                     <x-table.heading></x-table.heading>
                 </x-slot>
 

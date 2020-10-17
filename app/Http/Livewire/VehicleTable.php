@@ -13,14 +13,14 @@ class VehicleTable extends Component
 {
     use WithPagination, WithSorting, WithBulkActions;
 
-
+    public $search = '';
     public $showDeleteModal = false;
     public $showEditModal = false;
     public $showFilters = false;
     public $editing;
     public $successMessage;
 
-    protected $queryString = ['sortField', 'sortDirection'];
+    //protected $queryString = ['sortField', 'sortDirection'];
 
     protected $rules = [
         'editing.vin' => 'required',

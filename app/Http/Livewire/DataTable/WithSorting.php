@@ -4,22 +4,29 @@ namespace App\Http\Livewire\DataTable;
 
 trait WithSorting
 {
-    public $search = '';
-    public $sortField = 'rego';
-    public $sortDirection = 'asc';
+    public $sorts = [];
 
     public function sortBy($field)
     {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortDirection = 'asc';
+        if(! isset($this->sorts[$field])) {
+            $this->sorts[$field] = 'asc';
+            return;
         }
-        $this->sortField = $field;
+
+        if($this->sorts[$field] === 'desc') {
+            $this->sorts[$field] = 'desc';
+            return;
+        }
+
+        unset($this->sorts[$field]);
     }
 
     public function applySorting($query)
     {
-        return $query->orderBy($this->sortField, $this->sortDirection);
+        foreach ($this->sorts as $field => $direction) {
+            $query->orderBy($field, $direction);
+        }
+
+        return $query;
     }
 }
