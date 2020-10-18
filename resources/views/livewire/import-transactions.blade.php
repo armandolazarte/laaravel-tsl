@@ -16,17 +16,9 @@
                 </div>
                 @else
                 <div>
-                    <x-input.group for="title" label="Title" :error="$errors->first('fieldColumnMap.title')">
-                        <x-input.select wire:model="fieldColumnMap.title" id="title">
-                            <option value="" disabled>Select Column...</option>
-                            @foreach (columns as $column)
-                                <option>{{ $column }}</option>
-                            @endforeach
-                        </x-input.select>
-                    </x-input.group>
-
-                    <x-input.group for="amount" label="Amount" :error="$errors->first('fieldColumnMap.amount')">
-                        <x-input.select wire:model="fieldColumnMap.amount" id="amount">
+                    @json($columns)
+                    <x-input.group for="rego" label="Rego" :error="$errors->first('fieldColumnMap.rego')">
+                        <x-input.select wire:model="fieldColumnMap.rego" id="rego">
                             <option value="" disabled>Select Column...</option>
                             @foreach ($columns as $column)
                                 <option>{{ $column }}</option>
@@ -34,8 +26,8 @@
                         </x-input.select>
                     </x-input.group>
 
-                    <x-input.group for="status" label="Status">
-                        <x-input.select wire:model="fieldColumnMap.status" id="status">
+                    <x-input.group for="make" label="Make" :error="$errors->first('fieldColumnMap.make')">
+                        <x-input.select wire:model="fieldColumnMap.make" id="make">
                             <option value="" disabled>Select Column...</option>
                             @foreach ($columns as $column)
                                 <option>{{ $column }}</option>
@@ -43,14 +35,15 @@
                         </x-input.select>
                     </x-input.group>
 
-                    <x-input.group for="date" label="Date">
-                        <x-input.select wire:model="fieldColumnMap.date_for_editing" id="date">
+                    <x-input.group for="model" label="Model">
+                        <x-input.select wire:model="fieldColumnMap.model" id="model">
                             <option value="" disabled>Select Column...</option>
                             @foreach ($columns as $column)
                                 <option>{{ $column }}</option>
                             @endforeach
                         </x-input.select>
                     </x-input.group>
+
                 </div>
                 @endif
             </x-slot>
