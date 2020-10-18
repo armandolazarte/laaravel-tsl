@@ -25,6 +25,8 @@ class VehicleTable extends Component
 
     //protected $queryString = ['sortField', 'sortDirection'];
 
+    protected $listeners = ['refreshVehicles' => '$refresh'];
+
     protected $rules = [
         'editing.vin' => 'required',
         'editing.rego' => 'required',

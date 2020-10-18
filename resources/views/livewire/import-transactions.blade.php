@@ -16,7 +16,6 @@
                 </div>
                 @else
                 <div>
-                    @json($columns)
                     <x-input.group for="rego" label="Rego" :error="$errors->first('fieldColumnMap.rego')">
                         <x-input.select wire:model="fieldColumnMap.rego" id="rego">
                             <option value="" disabled>Select Column...</option>
