@@ -60,8 +60,7 @@ class ImportTransactions extends Component
         $this->reset();
 
         $this->emit('refreshVehicles');
-
-        $this->dispatchBrowserEvent('notify', 'Imported ' . $importCount .' Records!');
+        $this->notify('Imported ' . $importCount .' Records!');
     }
 
 
