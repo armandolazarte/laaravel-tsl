@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Verification;
+use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class VerificationFactory extends Factory
+class FileFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Verification::class;
+    protected $model = File::class;
 
     /**
      * Define the model's default state.

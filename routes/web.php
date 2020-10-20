@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Livewire\VehicleDetails;
 use App\Models\Vehicle;
+use App\Http\Livewire\VehicleDetails;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,5 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     })->name('dashboard');
 
 });
+
+Route::get('/files', [FileController::class, 'index'])->name('files');
