@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\File;
+use App\Models\Folder;
+use Livewire\Component;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Relation::morphMap([
+            'folder' => Folder::class,
+            'file' => File::class,
+        ])
         Component::macro('notify', function ($message) {
             $this->dispatchBrowserEvent('notify', $message);
         });
