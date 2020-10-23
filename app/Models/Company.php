@@ -15,8 +15,17 @@ class Company extends Model
 
     public static function booted()
     {
-        static::created(function ($model) {
-
+        /************************
+         * When a company is created, an objectable_id needs to be assigned to the objects migration
+         * which is linked to a company, this will then create new folder with the company name
+         * then access the objectable object and assign a folder to the object
+         * and persist to the database
+         ***********************/
+        static::created(function ($company) {
+            $folder = $company->folders()->create(['name' => $company->name]);
+            $object = $company->objects()->make(['parent_id' => null]);
+            $object->objectable()->associate($folder);
+            $object->save();
         });
     }
 

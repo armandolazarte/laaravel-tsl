@@ -10,9 +10,11 @@ class File extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public static function booted()
     {
-        static::created(function ($model) {
+        static::creating(function ($model) {
             $model->uuid = Str::uuid();
         });
     }

@@ -12,9 +12,11 @@ class Obj extends Model
 
     public $table = 'objects';
 
+    protected $guarded = [];
+
     public static function booted()
     {
-        static::created(function ($model) {
+        static::creating(function ($model) {
             $model->uuid = Str::uuid();
         });
     }
