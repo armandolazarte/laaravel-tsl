@@ -13,6 +13,13 @@ class Company extends Model
 {
     use HasFactory;
 
+    public static function booted()
+    {
+        static::created(function ($model) {
+
+        });
+    }
+
     public function users()
     {
         return $this->hasMany(User::class);
