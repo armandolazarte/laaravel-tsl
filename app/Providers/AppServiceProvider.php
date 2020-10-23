@@ -31,7 +31,8 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'folder' => Folder::class,
             'file' => File::class,
-        ])
+        ]);
+        
         Component::macro('notify', function ($message) {
             $this->dispatchBrowserEvent('notify', $message);
         });

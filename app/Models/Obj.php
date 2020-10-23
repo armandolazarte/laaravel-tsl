@@ -10,4 +10,9 @@ class Obj extends Model
     use HasFactory;
 
     public $table = 'objects';
+
+    public function objectable()
+    {
+        return $this->morphTo();
+    }
 }
