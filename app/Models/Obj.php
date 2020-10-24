@@ -6,10 +6,11 @@ use App\Models\Obj;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Obj extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRecursiveRelationships;
 
     public $table = 'objects';
 
@@ -32,8 +33,5 @@ class Obj extends Model
         return $this->morphTo();
     }
 
-    public function children()
-    {
-        return $this->hasMany(Obj::class, 'parent_id', 'id');
-    }
+    
 }
