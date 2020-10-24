@@ -25,9 +25,9 @@
                 </a>
 
                 @if(!$loop->last)
-                    <svg class="text-gray-300 w-5 h-5 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
+                <svg class="text-gray-300 w-5 h-5 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
                 @endif
                 @endforeach
             </div>
@@ -45,89 +45,93 @@
             </thead>
             <tbody>
                 @if ($creatingNewFolder)
-                    <tr class="border-gray-100 border-b-2 hover:bg-gray-100">
-                        <td class="p-3">
-                            <form class="flex items-center" wire:submit.prevent="createFolder">
-                                <input
-                                    wire:model="newFolderState.name"
-                                    type="text"
-                                    name=""
-                                    id=""
-                                    class="w-full px-3 h-10 border-2 border-gray-200 rounded-lg mr-2 ">
-                                <button
-                                    class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2"
-                                    type="submit">Create
-                                </button>
-                                <button
-                                    class="bg-gray-200 px-6 h-12 rounded-lg mr-2"
-                                    wire:click="$set('creatingNewFolder', false)"
-                                    >Cancel
-                                </button>
-                                </form>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tr class="border-gray-100 border-b-2 hover:bg-gray-100">
+                    <td class="p-3">
+                        <form class="flex items-center" wire:submit.prevent="createFolder">
+                            <input wire:model="newFolderState.name" type="text" name="" id="" class="w-full px-3 h-10 border-2 border-gray-200 rounded-lg mr-2 ">
+                            <button class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2" type="submit">Create
+                            </button>
+                            <button class="bg-gray-200 px-6 h-12 rounded-lg mr-2" wire:click="$set('creatingNewFolder', false)">Cancel
+                            </button>
+                        </form>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
                 @endif
                 @foreach ($object->children as $child)
-                    <tr>
-                        <td class="text-left py-2 px-3 flex items-center">
-                            @if ($child->objectable_type === 'file')
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                            @endif
-                            @if ($child->objectable_type === 'folder')
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
-                                </svg>
-                            @endif
+                <tr>
+                    <td class="text-left py-2 px-3 flex items-center">
 
-                            @if ($child->objectable_type === 'folder')
-                                <a href="{{ route('files', ['uuid' => $child->uuid]) }}" class="p-2 font-bold text-blue-700 flex-grow">
-                                    {{ $child->objectable->name }}
-                                </a>
-                            @endif
-                            @if ($child->objectable_type === 'file')
-                                <a href="" class="p-2 font-bold text-blue-700 flex-grow">
-                                    {{ $child->objectable->name }}
-                                </a>
-                            @endif
-                        </td>
+                        @if ($child->objectable_type === 'file')
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        @endif
+                        @if ($child->objectable_type === 'folder')
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                        </svg>
+                        @endif
 
-                            <td class="text-left py-2 px-3">
-                            @if ($child->objectable_type === 'file')
-                                {{$child->objectable->size }}
-                            @else
-                            --
-                            @endif
-                            </td>
+                        @if ($renamingObject === $child->id)
+                        <form class="flex items-center ml-2 flex-grow">
+                            <input wire:model="renamingObjectState.name" type="text" name="" id="" class="w-full px-3 h-10 border-2 border-gray-200 rounded-lg mr-2 ">
+                            <button class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2" type="submit">
+                                Rename
+                            </button>
+                            <button wire:click="$set('renamingObject', null)" class="bg-gray-200 px-6 h-12 rounded-lg mr-2">Cancel
+                            </button>
+                        </form>
+                        @else
 
-                        <td class="text-left py-2 px-3">
-                            {{ $child->created_at }}
-                        </td>
-                        <td class="text-left py-2 px-3">
-                            <div class="flex justify-end items-center">
-                                <ul class="flex items-center">
-                                    <li class="mr-4">
-                                        <button class="text-gray-400 font-bold">Rename</button>
-                                    </li>
-                                    <li>
-                                        <button class="text-red-400 font-bold">Delete</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                        @if ($child->objectable_type === 'folder')
+                        <a href="{{ route('files', ['uuid' => $child->uuid]) }}" class="p-2 font-bold text-blue-700 flex-grow">
+                            {{ $child->objectable->name }}
+                        </a>
+                        @endif
+                        @if ($child->objectable_type === 'file')
+                        <a href="" class="p-2 font-bold text-blue-700 flex-grow">
+                            {{ $child->objectable->name }}
+                        </a>
+                        @endif
+
+                        @endif
+                    </td>
+
+                    <td class="text-left py-2 px-3">
+                        @if ($child->objectable_type === 'file')
+                        {{$child->objectable->size }}
+                        @else
+                        --
+                        @endif
+                    </td>
+
+                    <td class="text-left py-2 px-3">
+                        {{ $child->created_at }}
+                    </td>
+                    <td class="text-left py-2 px-3">
+                        <div class="flex justify-end items-center">
+                            <ul class="flex items-center">
+                                <li class="mr-4">
+                                    <button wire:click="$set('renamingObject', {{$child->id}})" class="text-gray-400 font-bold">Rename</button>
+                                </li>
+                                <li>
+                                    <button class="text-red-400 font-bold">Delete</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
 
                 @endforeach
             </tbody>
         </table>
     </div>
     @if ($object->children->count() === 0)
-        <div class="py-3 text-gray-700">
-            This folder is empty
-        </div>
+    <div class="py-3 text-gray-700">
+        This folder is empty
+    </div>
     @endif
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Obj;
 use Livewire\Component;
 
 class FileBrowser extends Component
@@ -10,10 +11,24 @@ class FileBrowser extends Component
     public $ancestors;
 
     public $creatingNewFolder = false;
+    public $renamingObject;
+    public $renamingObjectState;
 
     public $newFolderState = [
         'name' => ''
     ];
+
+    public function updatingRenamingObject($id)
+    {
+        if($id === null) {
+            return;
+        }
+        if($object = Obj::forCurrentCompany()->find($id)) {
+            $this->renamingObjectState = [
+                'name' => $object->objectable->name
+            ];
+        }
+    }
 
     public function createFolder()
     {
