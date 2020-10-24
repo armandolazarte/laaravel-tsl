@@ -18,6 +18,19 @@ class FileBrowser extends Component
         'name' => ''
     ];
 
+    public function renameObject()
+    {
+        $this->validate([
+            'renamingObjectState.name' => 'required|max:255'
+        ]);
+
+        Obj::forCurrentCompany()->find($this->renamingObject)->objectable->update($this->renamingObjectState);
+
+        $this->object = $this->object->fresh();
+
+        $this->renamingObject = null;
+    }
+
     public function updatingRenamingObject($id)
     {
         if($id === null) {

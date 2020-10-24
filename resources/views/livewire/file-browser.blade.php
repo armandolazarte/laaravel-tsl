@@ -76,7 +76,7 @@
                         @endif
 
                         @if ($renamingObject === $child->id)
-                        <form class="flex items-center ml-2 flex-grow">
+                        <form wire:submit.prevent="renameObject" class="flex items-center ml-2 flex-grow">
                             <input wire:model="renamingObjectState.name" type="text" name="" id="" class="w-full px-3 h-10 border-2 border-gray-200 rounded-lg mr-2 ">
                             <button class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2" type="submit">
                                 Rename
