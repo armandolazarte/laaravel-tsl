@@ -36,48 +36,50 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-left py-2 px-3 flex items-center">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
-                        </svg>
-                        <a href="" class="p-2 font-bold text-blue-700 flex-grow">File/Folder name</a>
-                    </td>
-                    <td class="text-left py-2 px-3">Size</td>
-                    <td class="text-left py-2 px-3">Date</td>
-                    <td class="text-left py-2 px-3">
-                        <div class="flex justify-end items-center">
-                            <ul class="flex items-center">
-                                <li class="mr-4">
-                                    <button class="text-gray-400 font-bold">Rename</button>
-                                </li>
-                                <li>
-                                    <button class="text-red-400 font-bold">Delete</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-left py-2 px-3">Name</td>
-                    <td class="text-left py-2 px-3">Size</td>
-                    <td class="text-left py-2 px-3">Date</td>
-                    <td class="text-left py-2 px-3">
-                        <div class="flex justify-end items-center">
-                            <ul class="flex items-center">
-                                <li class="mr-4">
-                                    <button class="text-gray-400 font-bold">Rename</button>
-                                </li>
-                                <li>
-                                    <button class="text-red-400 font-bold">Delete</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                @foreach ($object->children as $child)
+                    <tr>
+                        <td class="text-left py-2 px-3 flex items-center">
+                            @if ($child->objectable_type === 'file')
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            @endif
+                            @if ($child->objectable_type === 'folder')
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                                </svg>
+                            @endif
+                            <a href="" class="p-2 font-bold text-blue-700 flex-grow">
+                                {{ $child->objectable->name }}
+                            </a>
+                        </td>
+
+                            <td class="text-left py-2 px-3">
+                            @if ($child->objectable_type === 'file')
+                                {{$child->objectable->size }}
+                            @else
+                            --
+                            @endif
+                            </td>
+
+                        <td class="text-left py-2 px-3">
+                            {{ $child->created_at }}
+                        </td>
+                        <td class="text-left py-2 px-3">
+                            <div class="flex justify-end items-center">
+                                <ul class="flex items-center">
+                                    <li class="mr-4">
+                                        <button class="text-gray-400 font-bold">Rename</button>
+                                    </li>
+                                    <li>
+                                        <button class="text-red-400 font-bold">Delete</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                @endforeach
             </tbody>
         </table>
     </div>

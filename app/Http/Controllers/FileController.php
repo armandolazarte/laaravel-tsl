@@ -22,7 +22,7 @@ class FileController extends Controller
             ->whereNull('parent_id')->first()->uuid))
             ->firstOrFail();
 
-        dd($object);
+        //dd($object->children);
 
         return view('files', [
             'object' => $object
