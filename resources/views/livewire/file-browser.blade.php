@@ -6,7 +6,7 @@
         </div>
         <div>
             <div>
-                <button class="bg-gray-200 px-6 h-12 rounded-lg mr-2">
+                <button class="bg-gray-200 px-6 h-12 rounded-lg mr-2" wire:click="$set('creatingNewFolder', true)">
                     New Folder
                 </button>
                 <button class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2">
@@ -44,6 +44,32 @@
                 </tr>
             </thead>
             <tbody>
+                @if ($creatingNewFolder)
+                    <tr class="border-gray-100 border-b-2 hover:bg-gray-100">
+                        <td class="p-3">
+                            <form class="flex items-center" wire:submit.prevent="createFolder">
+                                <input
+                                    wire:model="newFolderState.name"
+                                    type="text"
+                                    name=""
+                                    id=""
+                                    class="w-full px-3 h-10 border-2 border-gray-200 rounded-lg mr-2 ">
+                                <button
+                                    class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2"
+                                    type="submit">Create
+                                </button>
+                                <button
+                                    class="bg-gray-200 px-6 h-12 rounded-lg mr-2"
+                                    wire:click="$set('creatingNewFolder', false)"
+                                    >Cancel
+                                </button>
+                                </form>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endif
                 @foreach ($object->children as $child)
                     <tr>
                         <td class="text-left py-2 px-3 flex items-center">
