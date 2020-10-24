@@ -17,8 +17,8 @@ class FileController extends Controller
     {
         $user_id = $request->user()->company->id;
 
-        $object = Obj::where('company_id', $user_id)->where(
-            'uuid', $request->get('uuid', Obj::where('company_id', $user_id)
+        $object = Obj::forCurrentCompany()->where(
+            'uuid', $request->get('uuid', Obj::forCurrentCompany()
             ->whereNull('parent_id')->first()->uuid))
             ->firstOrFail();
 

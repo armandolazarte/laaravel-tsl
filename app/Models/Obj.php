@@ -22,6 +22,11 @@ class Obj extends Model
         });
     }
 
+    public function scopeForCurrentCompany($query)
+    {
+        $query->where('company_id', auth()->user()->company->id);
+    }
+
     public function objectable()
     {
         return $this->morphTo();
