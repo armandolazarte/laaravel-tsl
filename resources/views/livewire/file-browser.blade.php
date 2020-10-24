@@ -1,4 +1,5 @@
 <div>
+
     <div class="flex flex-wrap items-center justify-between mb-4">
         <div class="flex-grow mr-3 mb-3 md:mb-0">
             <input class="w-full px-3 h-12 border-2 rounded-lg" type="search" placeholder="Search files and folders">
@@ -49,9 +50,17 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
                                 </svg>
                             @endif
-                            <a href="" class="p-2 font-bold text-blue-700 flex-grow">
-                                {{ $child->objectable->name }}
-                            </a>
+
+                            @if ($child->objectable_type === 'folder')
+                                <a href="{{ route('files', ['uuid' => $child->uuid]) }}" class="p-2 font-bold text-blue-700 flex-grow">
+                                    {{ $child->objectable->name }}
+                                </a>
+                            @endif
+                            @if ($child->objectable_type === 'file')
+                                <a href="" class="p-2 font-bold text-blue-700 flex-grow">
+                                    {{ $child->objectable->name }}
+                                </a>
+                            @endif
                         </td>
 
                             <td class="text-left py-2 px-3">
@@ -83,4 +92,9 @@
             </tbody>
         </table>
     </div>
+    @if ($object->children->count() === 0)
+        <div class="py-3 text-gray-700">
+            This folder is empty
+        </div>
+    @endif
 </div>
