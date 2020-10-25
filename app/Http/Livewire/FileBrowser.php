@@ -4,9 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Obj;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class FileBrowser extends Component
 {
+    use WithFileUploads;
+
+    public $upload;
     public $object;
     public $ancestors;
 
@@ -18,6 +22,11 @@ class FileBrowser extends Component
     public $newFolderState = [
         'name' => ''
     ];
+
+    public function updatedUpload($upload)
+    {
+        $upload->storePublicly('files', ['disk' => 'local']);
+    }
 
     public function renameObject()
     {
