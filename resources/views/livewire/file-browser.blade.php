@@ -9,7 +9,7 @@
                 <button class="bg-gray-200 px-6 h-12 rounded-lg mr-2" wire:click="$set('creatingNewFolder', true)">
                     New Folder
                 </button>
-                <button class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2">
+                <button wire:click="$set('showingFileUploadModal', true)" class="bg-blue-600 text-white px-6 h-12 rounded-lg mr-2">
                     Upload Files
                 </button>
             </div>
@@ -134,4 +134,24 @@
         This folder is empty
     </div>
     @endif
+
+    <x-jet-modal wire:model="showingFileUploadModal">
+    <div
+        wire:ignore
+        class="m-3 border-dashed border-2"
+        x-data="{
+            initFilepond() {
+                const pond = FilePond.create(this.$refs.filepond, {
+                    
+                });
+            }
+
+        }"
+        x-init="initFilepond"
+    >
+        <div>
+            <input type="file" x-ref="filepond" multiple>
+        </div>
+    </div>
+    </x-jet-modal>
 </div>

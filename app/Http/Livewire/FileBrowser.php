@@ -13,6 +13,7 @@ class FileBrowser extends Component
     public $creatingNewFolder = false;
     public $renamingObject;
     public $renamingObjectState;
+    public $showingFileUploadModal = false;
 
     public $newFolderState = [
         'name' => ''
