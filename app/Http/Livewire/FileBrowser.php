@@ -25,7 +25,19 @@ class FileBrowser extends Component
 
     public function updatedUpload($upload)
     {
-        $upload->storePublicly('files', ['disk' => 'local']);
+        $object = $this->currentCompany->objects()->make(['parent_id' => $this->object->id]);
+
+        $object->objectable()->associate(
+            $this->currentCompany->files()->create([
+                'name' => $upload->getClientOriginalName(),
+                'size' => $upload->getSize(),
+                'path' => $upload->storePublicly('files', ['disk' => 'local'])
+            ])
+        );
+
+        $object->save();
+
+        $this->object = $this->object->fresh();
     }
 
     public function renameObject()

@@ -142,6 +142,7 @@
         x-data="{
             initFilepond() {
                 const pond = FilePond.create(this.$refs.filepond, {
+                    
                     server: {
                         process: (fieldName, file, metadata, load, error,
                         progress, abort, transfer, options) => {
