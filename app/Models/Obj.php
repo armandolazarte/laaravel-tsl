@@ -21,6 +21,13 @@ class Obj extends Model
         static::creating(function ($model) {
             $model->uuid = Str::uuid();
         });
+
+        static::deleting(function ($model) {
+            // Delete objectable
+            $model->objectable->delete();
+            //Delete descendants
+            $model->descendants->each->delete();
+        });
     }
 
     public function scopeForCurrentCompany($query)
@@ -33,5 +40,5 @@ class Obj extends Model
         return $this->morphTo();
     }
 
-    
+
 }
