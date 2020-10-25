@@ -102,7 +102,7 @@
 
                     <td class="text-left py-2 px-3">
                         @if ($child->objectable_type === 'file')
-                        {{$child->objectable->size }}
+                        {{$child->objectable->sizeForHumans() }}
                         @else
                         --
                         @endif
@@ -149,6 +149,9 @@
                             @this.set('showingFileUploadModal', false)
                         }
                     },
+
+                    allowRevert: false,
+
                     server: {
                         process: (fieldName, file, metadata, load, error,
                         progress, abort, transfer, options) => {
