@@ -23,6 +23,17 @@ class FileBrowser extends Component
         'name' => ''
     ];
 
+    public $confirmObjectDeletion;
+
+    public function deleteObject()
+    {
+        Obj::forCurrentCompany()->find($this->confirmObjectDeletion)->delete();
+
+        $this->confirmObjectDeletion = null;
+
+        $this->object = $this->object->fresh();
+    }
+
     public function updatedUpload($upload)
     {
         $object = $this->currentCompany->objects()->make(['parent_id' => $this->object->id]);

@@ -118,7 +118,9 @@
                                     <button wire:click="$set('renamingObject', {{$child->id}})" class="text-gray-400 font-bold">Rename</button>
                                 </li>
                                 <li>
-                                    <button class="text-red-400 font-bold">Delete</button>
+                                    <button
+                                        wire:click="$set('confirmObjectDeletion', {{ $child->id }})"
+                                        class="text-red-400 font-bold">Delete</button>
                                 </li>
                             </ul>
                         </div>
@@ -134,6 +136,31 @@
         This folder is empty
     </div>
     @endif
+
+    <x-jet-dialog-modal wire:model="confirmObjectDeletion">
+        <x-slot name="title">
+            {{__('Delete')}}
+        </x-slot>
+
+        <x-slot name="content">
+            {{__('Are you sure you want to delete this?')}}
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button
+                wire:click="$set('confirmObjectDeletion', null)"
+                wire:loading.attr="disabled"
+            >
+            {{__('Cancel')}}
+            </x-jet-secondary-button>
+            <x-jet-danger-button
+                class="ml-2"
+                wire:click="deleteObject"
+            >
+            {{__('Delete')}}
+            </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
 
     <x-jet-modal wire:model="showingFileUploadModal">
     <div
