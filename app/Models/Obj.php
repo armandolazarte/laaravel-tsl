@@ -24,7 +24,7 @@ class Obj extends Model
 
         static::deleting(function ($model) {
             // Delete objectable
-            $model->objectable->delete();
+            optional($model->objectable->delete());
             //Delete descendants
             $model->descendants->each->delete();
         });
