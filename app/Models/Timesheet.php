@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Timesheet;
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Staff extends Model
+class Timesheet extends Model
 {
     use HasFactory;
 
@@ -19,15 +19,14 @@ class Staff extends Model
 
 
             $query->where(function ($query) use ($term) {
-                $query->where('name', 'like', $term)
-                ->orWhere('email', 'like', $term)
-                ->orWhere('address', 'like', $term);
+                $query->where('started_at', 'like', $term)
+                ->orWhere('staff_id', 'like', $term);
             });
         });
     }
 
-    public function timesheets()
+    public function users()
     {
-        return $this->hasMany(Timesheet::class);
+        return $this->belongsTo(Staff::class);
     }
 }

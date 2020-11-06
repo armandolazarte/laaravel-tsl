@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Vehicle;
+use App\Http\Livewire\TimesheetTable;
 use App\Http\Livewire\VehicleDetails;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
@@ -21,6 +22,9 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
+
+    Route::get('/staff', \App\Http\Livewire\StaffTable::class)->name('staff');
+    Route::get('/timesheets', \App\Http\Livewire\TimesheetTable::class)->name('timesheets');
 
     Route::get('/vehicles', \App\Http\Livewire\VehicleTable::class)->name('vehicles');
 

@@ -24,7 +24,7 @@ class StaffFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'phone' => $this->faker->mobileNumber,
+            'phone' => 44423333,
             'address' => $this->faker->streetAddress,
             'suburb' => $this->faker->state,
             'city' => $this->faker->city
