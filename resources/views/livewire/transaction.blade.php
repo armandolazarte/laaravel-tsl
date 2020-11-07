@@ -21,17 +21,23 @@
 
                 <x-dropdown label="Bulk Actions">
                     <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400"/> <span>Export</span>
+                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
                     </x-dropdown.item>
 
                     <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" class="flex items-center space-x-2">
-                        <x-icon.trash class="text-cool-gray-400"/> <span>Delete</span>
+                        <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
                     </x-dropdown.item>
                 </x-dropdown>
 
                 <livewire:import-transactions />
 
-                <x-button.primary wire:click="create"><x-icon.plus/> New</x-button.primary>
+                <x-button.primary>
+                    <x-icon.plus />
+                    <a href="{{ route('create-transaction') }}">
+                        Create Transaction
+                    </a>
+
+                </x-button.primary>
             </div>
         </div>
 
@@ -112,7 +118,7 @@
 
                         <x-table.cell>
                             <span href="#" class="inline-flex space-x-2 truncate text-sm leading-5">
-                                <x-icon.cash class="text-cool-gray-400"/>
+                                <x-icon.cash class="text-cool-gray-400" />
 
                                 <p class="text-cool-gray-600 truncate">
                                     {{ $transaction->title }}
@@ -176,7 +182,7 @@
 
     <!-- Save Transaction Modal -->
     <form wire:submit.prevent="save">
-        <x-modal.dialog wire:model.defer="showEditModal">
+        <x-modal.dialog maxWidth="max-w-full" wire:model.defer="showEditModal">
             <x-slot name="title">Edit Transaction</x-slot>
 
             <x-slot name="content">
@@ -191,7 +197,7 @@
                 <x-input.group for="status" label="Status" :error="$errors->first('editing.status')">
                     <x-input.select wire:model="editing.status" id="status">
                         @foreach (App\Models\Transaction::STATUSES as $value => $label)
-                            <option value="{{ $value }}">{{ $label }}</option>
+                        <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </x-input.select>
                 </x-input.group>

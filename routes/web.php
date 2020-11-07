@@ -6,6 +6,7 @@ use App\Http\Livewire\TimesheetTable;
 use App\Http\Livewire\VehicleDetails;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
+use App\Http\Livewire\CreateTransaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::get('/vehicles', \App\Http\Livewire\VehicleTable::class)->name('vehicles');
     Route::get('/transactions', \App\Http\Livewire\TransactionTable::class)->name('transactions');
-
+    Route::get('transactions/create', CreateTransaction::class)->name('create-transaction');
     Route::get('vehicle/{id}', VehicleDetails::class)->name('vehicle-details');
 
     Route::get('/dashboard', function () {
