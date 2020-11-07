@@ -4,9 +4,15 @@ namespace App\Http\Livewire\DataTable;
 
 trait WithBulkActions
 {
+
     public $selectPage = false;
     public $selectAll = false;
     public $selected = [];
+
+    public function renderingWithBulkActions()
+    {
+        if ($this->selectAll) $this->selectPageRows();
+    }
 
     public function updatedSelected()
     {
@@ -18,6 +24,7 @@ trait WithBulkActions
     {
         if ($value) return $this->selectPageRows();
 
+        $this->selectAll = false;
         $this->selected = [];
     }
 
@@ -34,6 +41,6 @@ trait WithBulkActions
     public function getSelectedRowsQueryProperty()
     {
         return (clone $this->rowsQuery)
-            ->unless($this->selectAll, fn($query) => $query->whereKey($this->selected));
+            ->unless($this->selectAll, fn ($query) => $query->whereKey($this->selected));
     }
 }

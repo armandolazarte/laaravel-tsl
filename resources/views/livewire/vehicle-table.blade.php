@@ -1,4 +1,4 @@
-<div>
+<div class="py-12 ml-8 mr-8">
     <div class="py-4">
         <div class="flex items-centermb-8">
             <div>
@@ -9,7 +9,6 @@
             <div>
                 <livewire:import-transactions />
             </div>
-
         </div>
         <div class="flex w-full items-center">
             <div>
@@ -181,8 +180,6 @@
                 <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
                 <x-button.primary type="submit">Save</x-button.primary>
             </x-slot>
-
-
         </x-modal.dialog>
     </form>
 

@@ -25,7 +25,7 @@ class Timesheet extends Model
         });
     }
 
-    public function users()
+    public function staff()
     {
         return $this->belongsTo(Staff::class);
     }

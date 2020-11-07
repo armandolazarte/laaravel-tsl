@@ -18,6 +18,9 @@
                     <x-jet-nav-link href="{{ route('vehicles') }}">
                         {{ __('Vehicles') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('timesheets') }}">
+                        {{ __('Timesheets') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('files') }}" :active="request()->routeIs('files')">
                         {{ __('Files') }}
                     </x-jet-nav-link>

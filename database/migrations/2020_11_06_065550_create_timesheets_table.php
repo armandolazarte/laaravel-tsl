@@ -23,6 +23,8 @@ class CreateTimesheetsTable extends Migration
             $table->decimal('hours')->default(null)->nullable();
             $table->string('comments');
             $table->boolean('approved')->default(0);
+            $table->foreignId('approved_by')->constrained('users');
+            $table->timestamp('approved_date')->default(null)->nullable();
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-<div>
+<div class="py-12 ml-8 mr-8">
     <div class="py-4">
         <div class="flex items-centermb-8">
             <div>
@@ -37,7 +37,7 @@
                     <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" class="flex items-center space-x-2">
                         <x-icon.trash class="text-cool-gray-400"/> <span>Delete</span>
                     </x-dropdown.item>
-                    <x-dropdown.item type="button" wire:click="approveSelected" class="flex items-center space-x-2">
+                    <x-dropdown.item type="button" wire:click="$toggle('showApproveModal')" class="flex items-center space-x-2">
                         <x-icon.trash class="text-cool-gray-400"/> <span>Approve</span>
                     </x-dropdown.item>
                 </x-dropdown>
@@ -60,9 +60,9 @@
                     <x-table.heading class="pr-0 w-8">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('rego')" :direction="$sorts['rego'] ?? null" class="w-full">Rego</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('make')" :direction="$sorts['make'] ?? null">Make</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('model')" :direction="$sorts['model'] ?? null">Model</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('name')" :direction="$sorts['name'] ?? null" class="w-full">Staff</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('start')" :direction="$sorts['start'] ?? null">Start Time</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('finish')" :direction="$sorts['finish'] ?? null">Finish Time</x-table.heading>
 
                     <x-table.heading></x-table.heading>
                 </x-slot>
@@ -84,13 +84,12 @@
                     @endif
                     @forelse ($timesheets as $timesheet)
                     <x-table.row wire:key="row-{{ $timesheet->id}}">
-
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $timesheet->id }}" />
                         </x-table.cell>
 
                         <x-table.cell>
-                                {{$timesheet->staff_id}}
+                                {{$timesheet->staff->name}}
                         </x-table.cell>
 
                         <x-table.cell>
@@ -132,6 +131,20 @@
         </x-modal.dialog>
     </form>
 
+    <form wire:submit.prevent="approveSelected" action="">
+        <x-modal.confirmation wire:model.defer="showApproveModal">
+            <x-slot name="title">Delete timesheets</x-slot>
 
+            <x-slot name="content">
+                Are you sure you want to delete these timesheets?
+            </x-slot>
+            <x-slot name="footer">
+                <x-button.secondary wire:click="$set('showApproveModal', false)">Cancel</x-button.secondary>
+                <x-button.primary type="submit">Delete</x-button.primary>
+            </x-slot>
+
+
+        </x-modal.dialog>
+    </form>
 
 </div>

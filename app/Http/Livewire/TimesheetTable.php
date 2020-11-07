@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
+use Illuminate\Support\Facades\Auth;
 
 class TimesheetTable extends Component
 {
@@ -16,6 +17,8 @@ class TimesheetTable extends Component
 
     public $search = '';
     public $showDeleteModal = false;
+    public $showApproveModal = false;
+
     public $showEditModal = false;
     public $showFilters = false;
     public $editing;
@@ -34,6 +37,8 @@ class TimesheetTable extends Component
     //     'editing.city' => 'required',
     // ];
 
+    public function updatedFilters() { $this->resetPage(); }
+
     public function exportSelected()
     {
         return response()->streamDownload(function () {
@@ -43,19 +48,25 @@ class TimesheetTable extends Component
 
     public function deleteSelected()
     {
-        $this->selectedRowsQuery->delete();
+        $deleteCount = $this->selectedRowsQuery->delete();
 
         $this->showDeleteModal = false;
+
+        $this->dispatchBrowserEvent('notify', 'You\'ve deleted '.$deleteCount.' transactions');
     }
 
     public function approveSelected()
     {
         $count = $this->selectedRowsQuery->update([
-            'approved' => 1
+            'approved' => 1,
+            'approved_by' => Auth::id(),
         ]);
 
+        $id = Auth::id();
+
         $this->dispatchBrowserEvent('notify', $count . ' Timesheet records approved!');
-        //dd($count);
+
+        $this->showApproveModal = false;
     }
 
     public function create()
@@ -89,8 +100,9 @@ class TimesheetTable extends Component
     public function getRowsQueryProperty()
     {
         $query =  Timesheet::query()
+            ->where('approved', false)
+            ->with('staff')
             ->search($this->search);
-
         return $this->applySorting($query);
     }
 

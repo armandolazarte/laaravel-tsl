@@ -1,4 +1,4 @@
-<div>
+<div class="py-12 ml-8 mr-8">
     <div class="py-4">
         <div class="flex items-centermb-8">
             <div>
@@ -86,7 +86,7 @@
                             <x-input.checkbox wire:model="selected" value="{{ $person->id }}" />
                         </x-table.cell>
 
-                        <x-table.cell>                                                    
+                        <x-table.cell>
                                 {{$person->name}}
                         </x-table.cell>
 
