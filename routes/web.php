@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Vehicle;
+use App\Http\Livewire\Transaction;
 use App\Http\Livewire\TimesheetTable;
 use App\Http\Livewire\VehicleDetails;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('/timesheets', \App\Http\Livewire\TimesheetTable::class)->name('timesheets');
 
     Route::get('/vehicles', \App\Http\Livewire\VehicleTable::class)->name('vehicles');
+    Route::get('/transactions', \App\Http\Livewire\TransactionTable::class)->name('transactions');
 
     Route::get('vehicle/{id}', VehicleDetails::class)->name('vehicle-details');
 
