@@ -2,20 +2,22 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Staff;
 use Livewire\Component;
 use App\Models\Timesheet;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
-use Illuminate\Support\Facades\Auth;
 
 class TimesheetTable extends Component
 {
     use WithPerPagePagination, WithPagination, WithSorting, WithBulkActions;
 
     public $search = '';
+    public $showNonApproved = true;
     public $showDeleteModal = false;
     public $showApproveModal = false;
 
@@ -60,9 +62,8 @@ class TimesheetTable extends Component
         $count = $this->selectedRowsQuery->update([
             'approved' => 1,
             'approved_by' => Auth::id(),
+            'approved_date' => Carbon::now()->toDateTimeString()
         ]);
-
-        $id = Auth::id();
 
         $this->dispatchBrowserEvent('notify', $count . ' Timesheet records approved!');
 
@@ -100,7 +101,7 @@ class TimesheetTable extends Component
     public function getRowsQueryProperty()
     {
         $query =  Timesheet::query()
-            ->where('approved', false)
+            ->where('approved', !$this->showNonApproved)
             ->with('staff')
             ->search($this->search);
         return $this->applySorting($query);
