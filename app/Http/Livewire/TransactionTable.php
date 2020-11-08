@@ -25,20 +25,25 @@ class TransactionTable extends Component
         'date-min' => null,
         'date-max' => null,
     ];
+
     public Transaction $editing;
 
     protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
+
     public function rules() { return [
         'editing.title' => 'required|min:3',
         'editing.amount' => 'required',
         'editing.status' => 'required|in:'.collect(Transaction::STATUSES)->keys()->implode(','),
         'editing.date_for_editing' => 'required',
-    ]; }
+    ];
+    }
 
-    public function mount() { $this->editing = $this->makeBlankTransaction(); }
+    public function mount() {
+        $this->editing = $this->makeBlankTransaction();
+    }
     public function updatedFilters() { $this->resetPage(); }
 
     public function exportSelected()

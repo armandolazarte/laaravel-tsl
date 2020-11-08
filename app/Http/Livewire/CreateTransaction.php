@@ -2,15 +2,24 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Vehicle;
 use Livewire\Component;
 
 class CreateTransaction extends Component
 {
     public $transaction = [];
-    public $transactionItems = [];
+    public $transactionItems = [
+        ['job_id' => '', 'vehicle_id' => '']
+    ];
+    public $lineItems = [];
 
-    public $jobs = ['job 1', 'job 2', 'job 3', 'job 4'];
-    public $vehicles = ['vehicle 1', 'vehicle 2', 'vehicle 3', 'vehicle 4'];
+    public $allVehicles = [];
+    public $allJobs = [];
+
+    public function mount() {
+        $this->allVehicles = Vehicle::select('id', 'make', 'model')->get();
+        $this->allJobs = Job::select('id', 'make', 'model')->get();
+    }
 
     public function addLineItem()
     {

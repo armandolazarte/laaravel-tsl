@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Carbon\Carbon;
 use App\Models\Staff;
+use App\Models\Vehicle;
 use Livewire\Component;
 use App\Models\Timesheet;
 use Livewire\WithPagination;
@@ -25,6 +26,7 @@ class TimesheetTable extends Component
     public $showFilters = false;
     public $editing;
     public $successMessage;
+
 
     //protected $queryString = ['sortField', 'sortDirection'];
 
