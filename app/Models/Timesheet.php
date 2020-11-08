@@ -12,6 +12,7 @@ class Timesheet extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $dates= ['approved_at'];
 
     public function scopeSearch($query, string $terms = null)
     {
@@ -26,6 +27,11 @@ class Timesheet extends Model
         });
     }
 
+    public function getDateForEditingAttribute()
+    {
+        return $this->date->format('d/m/Y');
+    }
+
     public function staff()
     {
         return $this->belongsTo(Staff::class);
@@ -33,6 +39,6 @@ class Timesheet extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'approved_by');
     }
 }

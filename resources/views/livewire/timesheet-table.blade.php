@@ -1,9 +1,19 @@
 <div class="py-12 ml-8 mr-8">
     <span class="relative z-0 inline-flex shadow-sm">
-        <button wire:click="$set('showNonApproved', true)" type="button" class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+        <button
+            wire:click="$set('showNonApproved', true)"
+            type="button"
+            class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300
+            {{!$showNonApproved ? ' bg-white text-gray-700 hover:text-gray-500' : 'bg-purple-500 text-white' }}
+            text-md leading-5 font-medium focus:z-10 focus:outline-none">
             Non-Approved Timesheets
         </button>
-        <button wire:click="$set('showNonApproved', false)" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+        <button
+            wire:click="$set('showNonApproved', false)"
+            type="button"
+            class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300
+            {{$showNonApproved ? ' bg-white text-gray-700 hover:text-gray-500' : 'bg-purple-500 text-white' }}
+            text-md leading-5 font-medium focus:z-10 focus:outline-none">
             Approved Timesheets
         </button>
     </span>
@@ -51,7 +61,7 @@
                             <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
                         </x-dropdown.item>
                         <x-dropdown.item type="button" wire:click="$toggle('showApproveModal')" class="flex items-center space-x-2">
-                            <x-icon.trash class="text-cool-gray-400" /> <span>Approve</span>
+                            <x-icon.plus class="text-cool-gray-400" /> <span>Approve</span>
                         </x-dropdown.item>
                     </x-dropdown>
                 </div>
@@ -74,17 +84,24 @@
                     <x-table.heading class="pr-0 w-8">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('name')" :direction="$sorts['name'] ?? null" class="w-full">Staff</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('name')" :direction="$sorts['name'] ?? null">Staff</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('start')" :direction="$sorts['start'] ?? null">Start Time</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('finish')" :direction="$sorts['finish'] ?? null">Finish Time</x-table.heading>
-
-                    <x-table.heading></x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('afternoon')" :direction="$sorts['afternoon'] ?? null">Morning Break</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('morning')" :direction="$sorts['morning'] ?? null">Afternoon Break</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('hours')" :direction="$sorts['finish'] ?? null">Hours</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('comments')" :direction="$sorts['comments'] ?? null">Comments</x-table.heading>
+                    @if (!$showNonApproved)
+                        <x-table.heading sortable multi-column wire:click="sortBy('approved_by')" :direction="$sorts['approved_by'] ?? null">Approved By</x-table.heading>
+                        <x-table.heading sortable multi-column wire:click="sortBy('approved_date')" :direction="$sorts['approved_date'] ?? null">Approved Date</x-table.heading>
+                    @endif
+                    <x-table.heading class="w-6"></x-table.heading>
                 </x-slot>
 
                 <x-slot name="body">
                     @if ($selectPage)
                     <x-table.row class="bg-cool-gray-200" wire:key="row-message">
-                        <x-table.cell colspan="5">
+                        <x-table.cell colspan="{{ $showNonApproved ? 9 : 11 }}">
                             @unless ($selectAll)
                             <div>
                                 <span>You selected <strong>{{ $timesheets->count() }}</strong> timesheets, do you want to select all <strong>{{ $timesheets->total() }}</strong> timesheets?</span>
@@ -97,7 +114,9 @@
                     </x-table.row>
                     @endif
                     @forelse ($timesheets as $timesheet)
-                    <x-table.row wire:key="row-{{ $timesheet->id}}">
+                    <x-table.row
+                        class="{{ $timesheet->id % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}"
+                        wire:key="row-{{ $timesheet->id}}">
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $timesheet->id }}" />
                         </x-table.cell>
@@ -110,15 +129,42 @@
                             {{$timesheet->started_at}}
                         </x-table.cell>
                         <x-table.cell>
-                            {{$timesheet->started_at}}
+                            {{$timesheet->stopped_at}}
                         </x-table.cell>
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $timesheet->id }})">Edit</x-button.link>
+                            {{$timesheet->morning_break}}
                         </x-table.cell>
+                        <x-table.cell>
+                            {{$timesheet->afternoon_break}}
+                        </x-table.cell>
+                        <x-table.cell>
+                            {{$timesheet->hours}}
+                        </x-table.cell>
+                        <x-table.cell>
+                            {{$timesheet->comments}}
+                        </x-table.cell>
+                        @if (!$showNonApproved)
+                            <x-table.cell>
+                            {{$timesheet->user->name}}
+                            </x-table.cell>
+                            <x-table.cell>
+                            {{ $timesheet->approved_date }}
+                        </x-table.cell>
+                        @endif
+
+
+                        <x-table.cell>
+                            @if ($showNonApproved)
+                                <x-button.link
+                                    class="text-blue-800 font-bold"
+                                wire:click="edit({{ $timesheet->id }})">Edit</x-button.link>
+                            @endif
+                        </x-table.cell>
+
                     </x-table.row>
                     @empty
                     <x-table.row>
-                        <x-table.cell colspan="4">No results found</x-table.cell>
+                        <x-table.cell colspan="{{ $showNonApproved ? 9 : 11 }}">No results found</x-table.cell>
                     </x-table.row>
                     @endforelse
                 </x-slot>
@@ -147,10 +193,10 @@
 
     <form wire:submit.prevent="approveSelected" action="">
         <x-modal.confirmation wire:model.defer="showApproveModal">
-            <x-slot name="title">Delete timesheets</x-slot>
+            <x-slot name="title">Approve timesheets</x-slot>
 
             <x-slot name="content">
-                Are you sure you want to delete these timesheets?
+                Are you sure you want to approve these timesheets?
             </x-slot>
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showApproveModal', false)">Cancel</x-button.secondary>
@@ -159,6 +205,48 @@
 
 
             </x-modal.dialog>
+    </form>
+
+    <form wire:submit.prevent="save" action="">
+        <x-modal.dialog wire:model.defer="showEditModal">
+            <x-slot name="title">Edit Timesheet</x-slot>
+
+            <x-slot name="content">
+
+                <div class="flex mb-8">
+                    <div class="w-4/6">
+                        <x-input.group inline="true" marginRight="true" for="started_at" label="Started At" :error="$errors->first('editing.started_at')">
+                            <x-input.text wire:model="editing.started_at" id="started_at" />
+                        </x-input.group>
+                    </div>
+
+
+                    <x-input.group inline="true" marginLeft="true" for="stopped_at" label="Finished At" :error="$errors->first('editing.stopped_at')">
+                        <x-input.text wire:model="editing.stopped_at" id="stopped_at" />
+                    </x-input.group>
+                </div>
+
+                <div class="flex -mt-4">
+                    <x-input.group inline="true" marginRight="true" for="morning_break" label="Morning Break" :error="$errors->first('editing.morning_break')">
+                        <x-input.text wire:model="editing.morning_break" id="mamorning_breakke" />
+                    </x-input.group>
+
+                    <x-input.group inline="true" marginLeft="true" for="afternoon_break" label="Afternoon Break" :error="$errors->first('editing.afternoon_break')">
+                        <x-input.text wire:model="editing.afternoon_break" id="afternoon_break" />
+                    </x-input.group>
+                </div>
+                <div class="flex mb-2">
+                    <x-input.group inline="true" marginRight="true" for="comments" label="Comments" :error="$errors->first('editing.comments')">
+                        <x-input.text wire:model="editing.comments" id="comments" />
+                    </x-input.group>
+                </div>
+
+            </x-slot>
+            <x-slot name="footer">
+                <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
+                <x-button.primary type="submit">Save</x-button.primary>
+            </x-slot>
+        </x-modal.dialog>
     </form>
 
 </div>

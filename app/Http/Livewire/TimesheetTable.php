@@ -30,14 +30,13 @@ class TimesheetTable extends Component
 
     protected $listeners = ['refreshVehicles' => '$refresh'];
 
-    // protected $rules = [
-    //     'editing.name' => 'required',
-    //     'editing.email' => 'required',
-    //     'editing.phone' => 'required',
-    //     'editing.address' => 'required',
-    //     'editing.suburb' => 'required',
-    //     'editing.city' => 'required',
-    // ];
+    protected $rules = [
+        'editing.started_at' => 'required',
+        'editing.stopped_at' => 'required',
+        'editing.morning_break' => 'required',
+        'editing.afternoon_break' => 'required',
+        'editing.comments' => 'required',
+    ];
 
     public function updatedFilters() { $this->resetPage(); }
 
@@ -102,7 +101,8 @@ class TimesheetTable extends Component
     {
         $query =  Timesheet::query()
             ->where('approved', !$this->showNonApproved)
-            ->with('staff')
+            ->with('staff:id,name')
+            ->with('user:id,name')
             ->search($this->search);
         return $this->applySorting($query);
     }
