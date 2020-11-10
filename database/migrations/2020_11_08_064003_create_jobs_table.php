@@ -15,7 +15,14 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+             $table->string('job_ref');
+             $table->text('job_description')->nullable();
+             $table->string('address')->nullable();
+             $table->string('suburb')->nullable();
+             $table->string('city')->nullable();
+             $table->enum('active', ['Active', 'Inactive'])->default('Active');
+             $table->enum('status', ['New', 'In Progress', 'Pending', 'Completed'])->default('New');
+             $table->timestamps();
         });
     }
 

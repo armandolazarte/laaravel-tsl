@@ -369,7 +369,6 @@
                 </div>
                 </div>
 
-
                 @if ($step === 1) <livewire:vehicle-axle-spacing /> @endif
                 @if ($step === 2) <livewire:ratings /> @endif
                 @if ($step === 3) <livewire:vehicle-tare-weights/> @endif

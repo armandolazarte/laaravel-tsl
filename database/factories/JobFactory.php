@@ -22,7 +22,8 @@ class JobFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'job_ref' => $this->faker->numberBetween(100, 200),
+            'job_description' => $this->faker->jobTitle,
         ];
     }
 }
