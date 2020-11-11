@@ -14,18 +14,25 @@ class CreateTransaction extends Component
     public $property = '';
     public $transaction = [];
     public $transactionItems = [
-        ['job_id' => '', 'vehicle_id' => '']
-    ];
-    public $lineItems = [
-        ['job_id' => '', 'vehicle_id' => '']
+        [
+            'job_id' => '',
+            'vehicle_id' => '',
+            'description' => '',
+            'partCode' => '',
+            'purchaseCode' => '',
+            'quantity' => '',
+            'unit' => '',
+            'itemCost' => '',
+        ]
     ];
 
-    public $allVehicles = [];
-    public $allJobs = [];
+
+    public $vehicles = [];
+    public $jobs = [];
 
     public function mount() {
-        $this->allVehicles = Vehicle::select('id', 'make', 'model')->get();
-        $this->allJobs = Job::select('id', 'job_ref', 'job_description')->get();
+        $this->vehicles = Vehicle::select('id', 'make', 'model')->get();
+        $this->jobs = Job::select('id', 'job_ref', 'job_description')->get();
     }
 
     public function addLineItem()
@@ -38,8 +45,8 @@ class CreateTransaction extends Component
 
     public function updateItems($item)
     {
-        //dd($id);
-        $this->transactionItems[$item[0]]['vehicle_id'] = [$item[1]];
+        //dd($item);
+        $this->transactionItems[$item[0]][$item[1]] = $item[2];
     }
 
 

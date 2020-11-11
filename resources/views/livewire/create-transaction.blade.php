@@ -1,6 +1,6 @@
-<div class="antialiased sans-serif min-h-screen bg-white" style="min-height: 900px">
+<div class="antialiased sans-serif min-h-screen bg-white w-full" style="min-height: 900px">
     <div class="border-t-8 border-gray-700 h-2"></div>
-    <div class="container mx-auto py-6 px-4">
+    <div class="mx-auto py-6 px-20">
         <div class="flex justify-between">
             <h2 class="text-2xl font-bold mb-6 pb-2 tracking-wider uppercase">Invoice</h2>
             <div>
@@ -101,35 +101,90 @@
             <div class="px-1 w-20 text-center">
             </div>
         </div>
+        foooo {{$foo}}
         @json($transactionItems)
-
         @foreach ($transactionItems as $index => $transactionItem)
-        <div x-data="{
-            selectedCity: '',
+        <div class="h-16">
+            <div class="flex items-center align-middle">
+                <div wire:ignore class="w-64">
+                    <select class="w-full" id="selectJob{{$index}}" tabindex="-1" aria-hidden="true">
+                        @foreach ($jobs as $job)
+                        <option value="{{$job->id}}">{{$job->job_ref}} - {{$job->job_description}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div wire:ignore class="w-64 py-2 px-1">
+                    <select class="w-full" id="selectVehicle{{$index}}">
+                        @foreach ($vehicles as $vehicle)
+                        <option value="{{$vehicle->id}}">{{$vehicle->make}}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            select2Alpine() {
-                this.select2 = $(this.$refs.select).select2();
+                <div class="px-1">
+                    <x-input.text class="h-8 px-2" wire:model="transactionItems.{{$index}}.description" id="description{{$index}}" />
+                </div>
+                <div class="px-1">
+                    <x-input.text class="h-8 px-2" wire:model="transactionItems.{{$index}}.partCode" id="partCode{{$index}}" />
+                </div>
+                <div class="px-1">
+                    <x-input.text class="h-8 px-2" wire:model="transactionItems.{{$index}}.purchaseCode"  id="purchaseCode{{$index}}" />
+                </div>
+                <div class="px-1">
+                    <x-input.text class="h-8 px-2" wire:model="transactionItems.{{$index}}.quantity" id="quantity{{$index}}" />
+                </div>
+                <div class="px-1">
+                    <x-input.text class="h-8 px-2" wire:model="transactionItems.{{$index}}.unit" id="unit{{$index}}" />
+                </div>
+                <div class="px-1">
+                    <x-input.text class="h-8" wire:model="transactionItems.{{$index}}.itemCost" id="itemCost{{$index}}" />
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    $('#selectJob{{$index}}').select2({
+                        placeholder: 'Select an option',
+                    });
 
-                this.select2.on('select2:select', (event) => {
-                    this.selectedCity = event.target.value;
+                    $('#selectVehicle{{$index}}').select2({
+                        placeholder: 'Select an option',
+                    });
+
+                    $(document).on('change', '#selectJob{{$index}}', function(e) {
+                        console.log(e.target.id)
+                        const index = e.target.id.split('selectJob')[1]
+                        const value = e.target.value
+                        @this.call('updateItems', [index, 'job_id', value]);
+                    });
+
+                    $(document).on('change', '#selectVehicle{{$index}}', function(e) {
+                        const index = e.target.id.split('selectVehicle')[1]
+                        const value = e.target.value
+                        @this.call('updateItems', [index, 'vehicle_id', value]);
+                    });
+
+                    // $(document).on('keypress', '#description{{$index}}', function(e) {
+                    //     const index = e.target.id.split('description')[1]
+                    //     const value = e.target.value
+                    //     console.log(value)
+                    //     @this.call('updateItems', [index, 'description', value]).defer;
+                    // });
+
                 });
-
-                this.$watch('selectedCity', (value) => {
-                    this.select2.val(value).trigger('change');
-                    $wire.call('updateItems', [{{$index}}, this.selectedCity])
+                document.addEventListener("livewire:load", function(event) {
+                    window.livewire.hook('component.initialized', () => {
+                        $('#FirstOption').select2({
+                            placeholder: 'Select an option',
+                        });
+                    });
                 });
-                }
+            </script>
+            @endforeach
 
-            }" x-init="select2Alpine">
-            <select x-ref="select" data-placeholder="Select a City">
-                @foreach($allVehicles as $vehicle)
-                <option value="{{$vehicle->id}}">{{$vehicle->id}}</option>
-                @endforeach
-            </select>
+
         </div>
-        @endforeach
 
-        <button class="mt-6 bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 text-sm border border-gray-300 rounded shadow-sm" wire:click="addLineItem">
+        <button class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 text-sm border border-gray-300 rounded shadow-sm" wire:click="addLineItem">
             Add Invoice Items
         </button>
 
