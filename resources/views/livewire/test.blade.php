@@ -462,7 +462,58 @@
 
 
 
+<div class="h-16">
+            <div class="flex items-center align-middle">
 
+                <div class="px-1">
+                </div>
+                <div class="px-1">
+
+                </div>
+                <div class="px-1">
+                </div>
+                <div class="px-1">
+                </div>
+                <div class="px-1">
+                </div>
+                <div class="px-1">
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    $('#selectJob{{$index}}').select2({
+                        placeholder: 'Select an option',
+                    });
+
+                    $('#selectVehicle{{$index}}').select2({
+                        placeholder: 'Select an option',
+                    });
+
+                    $(document).on('change', '#selectJob{{$index}}', function(e) {
+                        console.log(e.target.id)
+                        const index = e.target.id.split('selectJob')[1]
+                        const value = e.target.value
+                        @this.call('updateItems', [index, 'job_id', value]);
+                    });
+
+                    $(document).on('change', '#selectVehicle{{$index}}', function(e) {
+                        const index = e.target.id.split('selectVehicle')[1]
+                        const value = e.target.value
+                        @this.call('updateItems', [index, 'vehicle_id', value]);
+                    });
+                });
+                document.addEventListener("livewire:load", function(event) {
+                    window.livewire.hook('component.initialized', () => {
+                        $('#FirstOption').select2({
+                            placeholder: 'Select an option',
+                        });
+                    });
+                });
+            </script>
+            @endforeach
+
+
+        </div>
 
 
 

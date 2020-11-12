@@ -26,7 +26,6 @@ class CreateTransaction extends Component
         ]
     ];
 
-
     public $vehicles = [];
     public $jobs = [];
 
@@ -40,6 +39,12 @@ class CreateTransaction extends Component
         $this->transactionItems[] = [
             'job_id' => '',
             'vehicle_id' => '',
+            'description' => '',
+            'partCode' => '',
+            'purchaseCode' => '',
+            'quantity' => '',
+            'unit' => '',
+            'itemCost' => '',
         ];
     }
 
@@ -47,6 +52,12 @@ class CreateTransaction extends Component
     {
         //dd($item);
         $this->transactionItems[$item[0]][$item[1]] = $item[2];
+    }
+
+    public function removeProduct($index)
+    {
+        unset($this->transactionItems[$index]);
+        $this->transactionItems = array_values($this->transactionItems);
     }
 
 
