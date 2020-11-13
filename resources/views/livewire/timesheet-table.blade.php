@@ -19,7 +19,7 @@
     </span>
 
     <div class="py-4">
-        <div class="flex items-centermb-8">
+        <div class="flex items-center mb-8">
             <div>
                 <x-button.primary wire:click="create">
                     <x-icon.plus /> Create timesheets

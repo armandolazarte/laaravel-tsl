@@ -65,4 +65,5 @@ class CreateTransaction extends Component
     {
         return view('livewire.create-transaction');
     }
+
 }

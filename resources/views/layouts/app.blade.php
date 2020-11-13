@@ -20,12 +20,13 @@
         <!-- Scripts -->
         <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
+        <!-- <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script> -->
         <script
             src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
             crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     </head>
     <body class="font-sans antialiased">
 

@@ -91,7 +91,6 @@
                 </tr>
             </thead>
             <tbody>
-
                 @foreach ($transactionItems as $index => $transactionItem)
                 <tr class="h-12 {{ $index % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}">
                     <td wire:ignore class="w-2/12">
@@ -168,6 +167,7 @@
                     });
                 </script>
                 @endforeach
+
             </tbody>
         </table>
 
@@ -316,5 +316,14 @@
                 </div>
             </div>
         </div>
+        <div class="flex items-center justify-end mb-8">
+        <div>
+            <x-button.primary wire:click="create">
+                <x-icon.plus /> Create Purchase Order
+            </x-button.primary>
+        </div>
     </div>
+    </div>
+
+
 </div>

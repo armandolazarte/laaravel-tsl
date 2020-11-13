@@ -27,7 +27,6 @@ class TimesheetTable extends Component
     public $editing;
     public $successMessage;
 
-
     //protected $queryString = ['sortField', 'sortDirection'];
 
     protected $listeners = ['refreshVehicles' => '$refresh'];
