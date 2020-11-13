@@ -222,6 +222,7 @@
                         <span class="mr-4 inline-block">:</span>
                         <div x-text="invoiceDueDate"></div>
                     </div>
+
                 </div>
                 <div class="pr-5">
                     <div class="w-32 h-32 mb-1 overflow-hidden">
@@ -316,13 +317,18 @@
                 </div>
             </div>
         </div>
-        <div class="flex items-center justify-end mb-8">
         <div>
-            <x-button.primary wire:click="create">
-                <x-icon.plus /> Create Purchase Order
-            </x-button.primary>
+        <x-input.search-dropdown :data="$jobs">
+
+        </x-input.search-dropdown>
         </div>
-    </div>
+        <div class="flex items-center justify-end mb-8">
+            <div>
+                <x-button.primary wire:click="create">
+                    <x-icon.plus /> Create Purchase Order
+                </x-button.primary>
+            </div>
+        </div>
     </div>
 
 

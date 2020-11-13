@@ -17,7 +17,6 @@ class Supplier extends Model
         collect(explode(' ', $terms))->filter()->each(function ($term) use ($query) {
             $term = '%'.$term.'%';
 
-
             $query->where(function ($query) use ($term) {
                 $query->where('company_name', 'like', $term)
                 ->orWhere('account_number', 'like', $term)

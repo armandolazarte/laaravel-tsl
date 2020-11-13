@@ -28,11 +28,14 @@ class Suppliers extends Component
     protected $listeners = ['refreshVehicles' => '$refresh'];
 
     protected $rules = [
-        'editing.started_at' => 'required',
-        'editing.stopped_at' => 'required',
-        'editing.morning_break' => 'required',
-        'editing.afternoon_break' => 'required',
-        'editing.comments' => 'required',
+        'editing.company_name' => 'required',
+        'editing.account_number' => 'required',
+        'editing.email' => 'required',
+        'editing.contact_name' => 'required',
+        'editing.contact_number' => 'required',
+        'editing.street_address' => 'required',
+        'editing.suburb' => 'required',
+        'editing.city' => 'required',
     ];
 
     public function updatedFilters() { $this->resetPage(); }
@@ -101,7 +104,7 @@ class Suppliers extends Component
         }
 
         return view('livewire.suppliers', [
-            'timesheets' => $this->rows
+            'suppliers' => $this->rows
         ]);
     }
 }
