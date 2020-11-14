@@ -3,11 +3,13 @@
 use App\Models\Vehicle;
 use App\Http\Livewire\Suppliers;
 use App\Http\Livewire\Transaction;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Livewire\TimesheetTable;
 use App\Http\Livewire\VehicleDetails;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Livewire\CreateTransaction;
+use App\Http\Controllers\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +44,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 });
 
 Route::get('/files', [FileController::class, 'index'])->name('files');
+
+Route::get('/invoices/pdf/{id}', [InvoiceController::class, 'getInvoice']);
+// Route::get('/invoices/pdf/{id}', function() {
+//     $pdf = PDF::loadView('invoice');
+//     return $pdf->download('invoice.pdf');
+// });
