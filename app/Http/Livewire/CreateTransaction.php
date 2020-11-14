@@ -3,9 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Job;
-use App\Models\Supplier;
 use App\Models\Vehicle;
 use Livewire\Component;
+use App\Models\Supplier;
+use App\Models\Transaction;
+use App\Models\TransactionItems;
 
 class CreateTransaction extends Component
 {
@@ -49,6 +51,34 @@ class CreateTransaction extends Component
             'unit' => '',
             'itemCost' => '',
         ];
+    }
+
+    public function create()
+    {
+        $transaction = Transaction::create([
+            'title' => 'Test title',
+            'supplier_id' => 2,
+            'amount' => 3222,
+            'status' => 'Pending',
+            'date' => '12/11/2020',
+        ]);
+
+            foreach($this->transactionItems as $item) {
+                //dd($item['job_id']);
+                TransactionItems::create([
+                    'transaction_id' => $transaction->id,
+                    'job_id' => $item['job_id'],
+                    'vehicle_id' => $item['vehicle_id'],
+                    'description' => $item['description'],
+                    'part_code' => $item['partCode'],
+                    'purchase_code' => $item['purchaseCode'],
+                    'quantity' => $item['quantity'],
+                    'unit' => $item['unit'],
+                    'item_cost' => $item['itemCost'],
+                ]);
+            }
+
+        //dd($transaction);
     }
 
     public function updateItems($item)

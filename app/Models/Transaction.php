@@ -47,7 +47,7 @@ class Transaction extends Model
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'supplier');
+        return $this->belongsTo(Supplier::class);
     }
 
     public function transactionItems()
