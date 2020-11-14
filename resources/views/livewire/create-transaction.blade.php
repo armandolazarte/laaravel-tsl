@@ -318,7 +318,7 @@
             </div>
         </div>
         <div>
-        <x-input.search-dropdown :data="$jobs">
+        <x-input.search-dropdown :data="$suppliers">
 
         </x-input.search-dropdown>
         </div>

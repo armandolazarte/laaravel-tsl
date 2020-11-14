@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Supplier;
+use App\Models\TransactionItems;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -47,5 +48,10 @@ class Transaction extends Model
     public function supplier()
     {
         return $this->belongsTo(Supplier::class, 'supplier');
+    }
+
+    public function transactionItems()
+    {
+        return $this->hasMany(TransactionItems::class);
     }
 }

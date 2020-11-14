@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Job;
+use App\Models\Supplier;
 use App\Models\Vehicle;
 use Livewire\Component;
 
@@ -28,10 +29,12 @@ class CreateTransaction extends Component
 
     public $vehicles = [];
     public $jobs = [];
+    public $suppliers = [];
 
     public function mount() {
         $this->vehicles = Vehicle::select('id', 'make', 'model')->get();
         $this->jobs = Job::select('id', 'job_ref', 'job_description')->get();
+        $this->suppliers = Supplier::select('id', 'company_name', 'account_number')->get();
     }
 
     public function addLineItem()
