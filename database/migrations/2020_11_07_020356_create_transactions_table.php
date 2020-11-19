@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('invoice_number')->nullable();
             $table->foreignId('supplier_id')->constrained('suppliers');
             $table->integer('amount')->nullable();
             $table->string('status');

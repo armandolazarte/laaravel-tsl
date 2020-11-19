@@ -12,7 +12,7 @@ class InvoiceController extends Controller
     {
         // $transaction = Transaction::with(['transactionItems'])
         //     ->where('id', $id);
-        $transaction = Transaction::with(['transactionItems'])
+        $transaction = Transaction::with(['transactionItems', 'supplier'])
             ->findOrFail($id);
         //dd($transaction);
 

@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Supplier;
 use App\Models\Transaction;
 use App\Models\TransactionItems;
+use Illuminate\Support\Facades\DB;
 
 class CreateTransaction extends Component
 {
@@ -55,10 +56,26 @@ class CreateTransaction extends Component
 
     public function create()
     {
+        $latest = DB::table('transactions')->latest()->first();
+        $invoiceNumber = '';
+        $totalPrice = 0;
+
+        if(! $latest) {
+            $invoiceNumber = 'INV-00001';
+        } else {
+            $invoiceNumber = 'INV-' . (str_pad((int)$latest->id + 1, 5, '0', STR_PAD_LEFT));
+        }
+
+        foreach($this->transactionItems as $item) {
+            $totalPrice += $item['itemCost'];
+        }
+        //dd($totalPrice);
+
         $transaction = Transaction::create([
             'title' => 'Test title',
+            'invoice_number' => $invoiceNumber,
             'supplier_id' => 2,
-            'amount' => 3222,
+            'amount' => $totalPrice,
             'status' => 'Pending',
             'date' => '12/11/2020',
         ]);

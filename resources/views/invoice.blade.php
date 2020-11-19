@@ -11,19 +11,23 @@
         body {
             font-family: "DejaVu Sans";
         }
+
         html {
             margin: 0px;
             padding: 0px;
             margin-top: 50px;
         }
+
         .text-center {
             text-align: center
         }
+
         hr {
             margin: 0 30px 0 30px;
             color: rgba(0, 0, 0, 0.2);
             border: 0.5px solid #EAF1FB;
         }
+
         /* -- Header -- */
         .header-bottom-divider {
             color: rgba(0, 0, 0, 0.2);
@@ -32,6 +36,7 @@
             left: 0px;
             width: 100%;
         }
+
         .header-container {
             position: absolute;
             width: 100%;
@@ -39,22 +44,26 @@
             left: 0px;
             top: -50px;
         }
+
         .header-logo {
             height: 50px;
             margin-top: 20px;
             text-transform: capitalize;
             color: #817AE3;
         }
+
         .header {
             font-size: 20px;
             color: rgba(0, 0, 0, 0.7);
         }
+
         .content-wrapper {
             display: block;
             margin-top: 0px;
             padding-top: 16px;
             padding-bottom: 20px;
         }
+
         .company-address-container {
             padding-left: 30px;
             float: left;
@@ -62,6 +71,7 @@
             text-transform: capitalize;
             margin-bottom: 2px;
         }
+
         .company-address-container h1 {
             font-size: 15px;
             line-height: 22px;
@@ -69,6 +79,7 @@
             margin-bottom: 0px;
             margin-top: 10px;
         }
+
         .company-address {
             margin-top: 2px;
             text-align: left;
@@ -76,10 +87,12 @@
             line-height: 15px;
             color: #595959;
         }
+
         .invoice-details-container {
             float: right;
             padding: 10px 30px 0 0;
         }
+
         .attribute-label {
             font-size: 12px;
             line-height: 18px;
@@ -87,16 +100,19 @@
             text-align: left;
             color: #55547A;
         }
+
         .attribute-value {
             font-size: 12px;
             line-height: 18px;
             text-align: right;
         }
+
         /* -- Shipping -- */
         .shipping-address-container {
             float: right;
             padding-left: 30px;
         }
+
         .shipping-address-label {
             font-size: 12px;
             line-height: 18px;
@@ -104,6 +120,7 @@
             margin-top: 27px;
             margin-bottom: 0px;
         }
+
         .shipping-address-name {
             max-width: 160px;
             font-size: 15px;
@@ -111,6 +128,7 @@
             padding: 0px;
             margin: 0px;
         }
+
         .shipping-address {
             font-size: 10px;
             line-height: 15px;
@@ -119,11 +137,13 @@
             margin: 0px;
             width: 160px;
         }
+
         /* -- Billing -- */
         .billing-address-container {
             float: left;
             padding-left: 30px;
         }
+
         .billing-address-label {
             font-size: 12px;
             line-height: 18px;
@@ -131,6 +151,7 @@
             margin-top: 27px;
             margin-bottom: 0px;
         }
+
         .billing-address-name {
             max-width: 160px;
             font-size: 15px;
@@ -138,6 +159,7 @@
             padding: 0px;
             margin: 0px;
         }
+
         .billing-address {
             font-size: 10px;
             line-height: 15px;
@@ -146,6 +168,7 @@
             margin: 0px;
             width: 160px;
         }
+
         /* -- Items Table -- */
         .items-table {
             margin-top: 35px;
@@ -153,41 +176,49 @@
             page-break-before: avoid;
             page-break-after: auto;
         }
+
         .items-table hr {
             height: 0.1px;
         }
+
         .item-table-heading {
             font-size: 13.5;
-            text-align: center;
+            text-align: right;
             color: rgba(0, 0, 0, 0.85);
             padding: 5px;
             color: #55547A;
         }
+
         tr.item-table-heading-row th {
             border-bottom: 0.620315px solid #E8E8E8;
             font-size: 12px;
             line-height: 18px;
         }
+
         tr.item-row td {
             font-size: 12px;
             line-height: 18px;
         }
+
         .item-cell {
             font-size: 13;
-            text-align: center;
+            text-align: left;
             padding: 5px;
             padding-top: 10px;
             color: #040405;
         }
+
         .item-description {
             color: #595959;
             font-size: 9px;
             line-height: 12px;
         }
+
         /* -- Total Display Table -- */
         .total-display-container {
             padding: 0 25px;
         }
+
         .total-display-table {
             border-top: none;
             box-sizing: border-box;
@@ -197,12 +228,14 @@
             margin-left: 500px;
             margin-top: 20px;
         }
+
         .total-table-attribute-label {
             font-size: 13px;
             color: #55547A;
             text-align: left;
             padding-left: 10px;
         }
+
         .total-table-attribute-value {
             font-weight: bold;
             text-align: right;
@@ -212,18 +245,21 @@
             padding-top: 2px;
             padding-bottom: 2px;
         }
+
         .total-border-left {
             border: 1px solid #E8E8E8 !important;
             border-right: 0px !important;
             padding-top: 0px;
             padding: 8px !important;
         }
+
         .total-border-right {
             border: 1px solid #E8E8E8 !important;
             border-left: 0px !important;
             padding-top: 0px;
             padding: 8px !important;
         }
+
         /* -- Notes -- */
         .notes {
             font-size: 12px;
@@ -234,6 +270,7 @@
             text-align: left;
             page-break-inside: avoid;
         }
+
         .notes-label {
             font-size: 15px;
             line-height: 22px;
@@ -243,45 +280,58 @@
             height: 19.87px;
             padding-bottom: 10px;
         }
+
         /* -- Helpers -- */
         .text-primary {
             color: #5851DB;
         }
+
         .text-center {
             text-align: center
         }
+
         table .text-left {
             text-align: left;
         }
+
         table .text-right {
             text-align: right;
         }
+
         .border-0 {
             border: none;
         }
+
         .py-2 {
             padding-top: 2px;
             padding-bottom: 2px;
         }
+
         .py-8 {
             padding-top: 8px;
             padding-bottom: 8px;
         }
+
         .py-3 {
             padding: 3px 0;
         }
+
         .pr-20 {
             padding-right: 20px;
         }
+
         .pr-10 {
             padding-right: 10px;
         }
+
         .pl-20 {
             padding-left: 20px;
         }
+
         .pl-10 {
             padding-left: 10px;
         }
+
         .pl-0 {
             padding-left: 0;
         }
@@ -289,71 +339,100 @@
 </head>
 
 <body>
+    <div class="header-container">
+        <table width="100%">
+            <tr>
+                <td class="text-center">
+                    <h2 class="header-logo"> Test Company </h2>
+                </td>
+            </tr>
+        </table>
+        <hr class="header-bottom-divider" style="border: 0.620315px solid #E8E8E8;" />
+    </div>
+    <div class="content-wrapper">
+        <div style="padding-top: 30px">
+            <div class="invoice-details-container">
+                <table>
+                    <tr>
+                        <td class="attribute-label">Invoice Number</td>
+                        <td class="attribute-value"> &nbsp;{{$transaction->id}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attribute-label">Supplier</td>
+                        <td class="attribute-value"> &nbsp;{{$transaction->supplier->company_name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="attribute-label">Date</td>
+                        <td class="attribute-value"> &nbsp;{{ \Carbon\Carbon::parse($transaction->date)->format('j F, Y') }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
 
     <table width="100%" class="items-table" cellspacing="0" border="0">
-    <tr class="item-table-heading-row">
-        <th width="2%" class="item-table-heading text-right pr-20">#</th>
-        <th width="40%" class="item-table-heading text-left pl-0">Items</th>
-        <th class="item-table-heading text-right pr-20">Quantity</th>
-        <th class="item-table-heading pr-20 text-right">Price</th>
-        <th class="item-table-heading text-right">Amount</th>
-    </tr>
-    @foreach($transaction->transactionItems as $item)
+        <tr class="item-table-heading-row">
+            <th width="2%" class="item-table-heading text-right pr-20">#</th>
+            <th width="20%" class="item-table-heading text-left pl-0">Items</th>
+            <th class="item-table-heading text-right pr-20">Part Code</th>
+            <th class="item-table-heading pr-20 text-right">Purchase Code</th>
+            <th class="item-table-heading text-right">Quantity</th>
+            <th class="item-table-heading text-right">Unit</th>
+        </tr>
+        @php
+            $index = 1
+        @endphp
+        @foreach($transaction->transactionItems as $item)
         <tr class="item-row">
-            <td
-                class="item-cell text-right pr-20"
-                style="vertical-align: top;"
-            >
+            <td class="item-cell text-right pr-20" style="vertical-align: top;">
+            {{$index}}
             </td>
-            <td
-                class="item-cell text-left pl-0"
-                style="vertical-align: top;"
-            >
-                <span>Name</span><br>
-                <span class="item-description">{{$item->description}}</span>
+            <td class="item-cell text-left pl-0" style="vertical-align: top;">
+                <span>{{$item->description}}</span>
             </td>
-            <td
-                class="item-cell pr-20 text-right"
-                style="vertical-align: top;"
-            >
-            {{$item->quantity}}
+            <td class="item-cell text-right pr-20" style="vertical-align: top;">
+                {{$item->part_code}}
             </td>
-            <td
-                class="item-cell text-right pr-20"
-                style="vertical-align: top;"
-            >
-            {{$item->part_code}}
+            <td class="item-cell text-right pr-20" style="vertical-align: top;">
+                {{$item->purchase_code}}
             </td>
-            <td
-                class="item-cell text-right"
-                style="vertical-align: top;"
-            >
+            <td class="item-cell pr-20 text-right" style="vertical-align: top;">
+                {{$item->quantity}}
+            </td>
+            <td class="item-cell pr-20 text-right" style="vertical-align: top;">
+                {{$item->unit}}
+            </td>
+            <td class="item-cell text-left" style="vertical-align: top;">
             </td>
         </tr>
+        @php
+            $index += 1
+        @endphp
         @endforeach
-</table>
-
-<hr class="item-cell-table-hr">
-
-<div class="total-display-container">
-    <table width="100%" cellspacing="0px" class="">
-        <tr>
-            <td class="border-0 total-table-attribute-label">Subtotal</td>
-            <td class="border-0 item-cell py-2 total-table-attribute-value">
-            </td>
-        </tr>
-
-        <tr>
-            <td class="py-3"></td>
-            <td class="py-3"></td>
-        </tr>
-        <tr>
-            <td class="border-0 total-border-left total-table-attribute-label">
-                Total
-            </td>
-        </tr>
     </table>
-</div>
+
+    <hr class="item-cell-table-hr">
+
+    <div class="total-display-container">
+        <table width="100%" cellspacing="0px" class="">
+            <tr>
+                <td class="border-0 total-table-attribute-label">Subtotal</td>
+                <td class="border-0 item-cell py-2 total-table-attribute-value">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="py-3"></td>
+                <td class="py-3"></td>
+            </tr>
+            <tr>
+                <td class="border-0 total-border-left total-table-attribute-label">
+                    Total
+                </td>
+            </tr>
+
+        </table>
+    </div>
 </body>
 
 </html>
