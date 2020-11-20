@@ -14,9 +14,9 @@
             </tr>
         </thead>
         <tbody>
+            @json($items)
             @foreach ($items as $index => $item)
-
-            <tr wire:key="item-field-{{ $item->id }}" class="h-12 {{ $index % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}">
+            <tr wire:key="item-row-{{ $item['id'] }}" class="h-12 {{ $index % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}">
                 <td wire:ignore class="w-2/12">
                     <select class="w-full" id="selectJob{{$index}}" tabindex="-1" aria-hidden="true">
                         @foreach ($jobs as $job)
@@ -26,20 +26,19 @@
                         <option value="{{$job->id}}">{{$job->job_ref}} - {{$job->job_description}}</option>
                         @endif
                         @endforeach
-
                     </select>
                 </td>
                 <td wire:ignore class="w-2/12 py-2 px-1">
-                        <select class="w-full" id="selectVehicle{{$index}}">
-                            @foreach ($vehicles as $vehicle)
-                                @if ($item['vehicle_id'] === $vehicle->id)
-                                    <option selected="selected" value="{{$vehicle->id}}">{{$vehicle->make}}</option>
-                                @else
-                                <option value="{{$vehicle->id}}">{{$vehicle->make}}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </td>
+                    <select class="w-full" id="selectVehicle{{$index}}">
+                        @foreach ($vehicles as $vehicle)
+                        @if ($item['vehicle_id'] === $vehicle->id)
+                        <option selected="selected" value="{{$vehicle->id}}">{{$vehicle->make}}</option>
+                        @else
+                        <option value="{{$vehicle->id}}">{{$vehicle->make}}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                </td>
                 <td class="w-1/6 p-1">
                     <x-input.text wire:model="items.{{$index}}.description" class="h-8 px-2" />
                 </td>
@@ -87,4 +86,12 @@
 
         </tbody>
     </table>
+
+    <div class="flex items-center justify-end mb-8">
+        <div>
+            <x-button.primary wire:click="save">
+                <x-icon.plus /> Save Purchase Order
+            </x-button.primary>
+        </div>
+    </div>
 </div>
