@@ -60,7 +60,27 @@ class EditTransaction extends Component
         }
     }
 
+    public function addLineItem()
+    {
+        $this->items->add([
+            'transaction_id' => $this->transaction->id,
+            'job_id' => '',
+            'vehicle_id' => '',
+            'description' => '',
+            'part_code' => '',
+            'purchase_code' => '',
+            'quantity' => '',
+            'unit' => '',
+            'item_cost' => '',
+        ]);
+    }
 
+
+    public function removeProduct($index)
+    {
+        unset($this->items[$index]);
+        $this->transactionItems = array_values($this->transactionItems);
+    }
 
     public function mount($id)
     {
