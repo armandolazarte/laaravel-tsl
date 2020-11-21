@@ -14,7 +14,7 @@ class EditTransaction extends Component
     public $items;
     public $vehicles = [];
     public $jobs = [];
-
+    public $foo;
     protected $rules = [
         'items.*.job_id' => 'required',
         'items.*.vehicle_id' => 'required',
@@ -29,21 +29,38 @@ class EditTransaction extends Component
     public function save()
     {
         $this->validate();
-
         foreach ($this->items as $item) {
-            TransactionItems::where('id', $item['id'])->update([
-                'job_id' => $item['job_id'],
-                'vehicle_id' => $item['vehicle_id'],
-                'description' => $item['description'],
-                'part_code' => $item['part_code'],
-                'purchase_code' => $item['purchase_code'],
-                'quantity' => $item['quantity'],
-                'unit' => $item['unit'],
-                'item_cost' => $item['item_cost'],
-            ]);
+            //dd(array_key_exists('id', $item));
+            //dd($item->contains('id'));
+            if(array_key_exists('id', $item)) {
+                TransactionItems::where('id', $item['id'])->update([
+                    'job_id' => $item['job_id'],
+                    'vehicle_id' => $item['vehicle_id'],
+                    'description' => $item['description'],
+                    'part_code' => $item['part_code'],
+                    'purchase_code' => $item['purchase_code'],
+                    'quantity' => $item['quantity'],
+                    'unit' => $item['unit'],
+                    'item_cost' => $item['item_cost'],
+                ]);
+            } else {
+                TransactionItems::create([
+                    'job_id' => $item['job_id'],
+                    'vehicle_id' => $item['vehicle_id'],
+                    'description' => $item['description'],
+                    'part_code' => $item['part_code'],
+                    'purchase_code' => $item['purchase_code'],
+                    'quantity' => $item['quantity'],
+                    'unit' => $item['unit'],
+                    'item_cost' => $item['item_cost'],
+                ]);
+            }
+
 
         }
     }
+
+
 
     public function mount($id)
     {
