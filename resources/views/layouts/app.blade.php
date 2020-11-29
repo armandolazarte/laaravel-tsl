@@ -30,8 +30,8 @@
     </head>
     <body class="font-sans antialiased">
 
-        <x-notification />
         <div class="min-h-screen bg-gray-100">
+            <x-notification />
             @livewire('navigation-dropdown')
 
             <!-- Page Heading -->
