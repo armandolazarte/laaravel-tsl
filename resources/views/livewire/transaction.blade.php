@@ -1,20 +1,6 @@
 <div class="py-12 ml-8 mr-8">
     <h1 class="text-2xl font-semibold text-gray-900">Transactions</h1>
     <div class="py-4 space-y-4">
-        <!-- Top Bar -->
-
-        <!--
-        <div class="flex justify-between">
-            <div class="w-2/4 flex space-x-4">
-                <x-input.text wire:model="filters.search" placeholder="Search Transactions..." />
-
-                <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...</x-button.link>
-            </div>
-            </div>
-        </div>
-
-        -->
-
         <div class="flex items-center mb-8">
             <div>
                 <x-button.primary wire:click="create">

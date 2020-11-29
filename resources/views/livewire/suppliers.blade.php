@@ -1,5 +1,5 @@
 <div class="py-12 ml-8 mr-8">
-
+<h1 class="text-2xl font-semibold text-gray-900">Suppliers</h1>
     <div class="py-4">
         <div class="flex items-center mb-8">
             <div>

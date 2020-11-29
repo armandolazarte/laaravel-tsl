@@ -1,4 +1,5 @@
 <div class="py-12 ml-8 mr-8">
+<h1 class="text-2xl font-semibold text-gray-900">Timesheets</h1>
     <span class="relative z-0 inline-flex shadow-sm">
         <button
             wire:click="$set('showNonApproved', true)"
