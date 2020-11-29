@@ -24,6 +24,8 @@ class JobFactory extends Factory
         return [
             'job_ref' => $this->faker->numberBetween(100, 200),
             'job_description' => $this->faker->jobTitle,
+            'total_cost' => $this->faker->numberBetween(10000, 40000),
+            'revenue' => $this->faker->numberBetween(50000, 100000),
         ];
     }
 }

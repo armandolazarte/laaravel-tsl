@@ -1,43 +1,70 @@
-<div>
-    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-
+<div class="py-12 ml-8 mr-8">
+    <h1 class="text-2xl font-semibold text-gray-900">Transactions</h1>
     <div class="py-4 space-y-4">
         <!-- Top Bar -->
+
+        <!--
         <div class="flex justify-between">
             <div class="w-2/4 flex space-x-4">
                 <x-input.text wire:model="filters.search" placeholder="Search Transactions..." />
 
                 <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...</x-button.link>
             </div>
+            </div>
+        </div>
 
-            <div class="space-x-2 flex items-center">
-                <x-input.group borderless paddingless for="perPage" label="Per Page">
+        -->
+
+        <div class="flex items-center mb-8">
+            <div>
+                <x-button.primary wire:click="create">
+                    <x-icon.plus />
+                    <a href="{{ route('create-transaction') }}">
+                        Create Transaction
+                    </a>
+                </x-button.primary>
+            </div>
+            <div class="ml-2">
+                <livewire:import-transactions />
+            </div>
+
+        </div>
+        <div class="mb-4 mt-6 flex justify-between items-center">
+            <div class="flex-1 pr-4">
+                <div class="relative md:w-1/4">
+                    <input wire:model="search" type="search" class="w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="Search...">
+                    <div class="absolute top-0 left-0 inline-flex items-center p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                            <circle cx="10" cy="10" r="7" />
+                            <line x1="21" y1="21" x2="15" y2="15" />
+                        </svg>
+                    </div>
+                </div>
+                <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...</x-button.link>
+            </div>
+            <div class="flex items-center">
+                <x-input.group borderless paddingless for="perPage" label="">
                     <x-input.select wire:model="perPage" id="perPage">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
                     </x-input.select>
                 </x-input.group>
-
-                <x-dropdown label="Bulk Actions">
-                    <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
-                    </x-dropdown.item>
-
-                    <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" class="flex items-center space-x-2">
-                        <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
-                    </x-dropdown.item>
-                </x-dropdown>
-
-                <livewire:import-transactions />
-
-                <x-button.primary>
-                    <x-icon.plus />
-                    <a href="{{ route('create-transaction') }}">
-                        Create Transaction
-                    </a>
-
-                </x-button.primary>
+                <div class="ml-2">
+                    <x-dropdown label="Bulk Actions">
+                        <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
+                            <x-icon.download class="text-cool-gray-400" />
+                            <span>Export</span>
+                        </x-dropdown.item>
+                        <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" class="flex items-center space-x-2">
+                            <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
+                        </x-dropdown.item>
+                        <x-dropdown.item type="button" wire:click="$toggle('showApproveModal')" class="flex items-center space-x-2">
+                            <x-icon.plus class="text-cool-gray-400" /> <span>Approve</span>
+                        </x-dropdown.item>
+                    </x-dropdown>
+                </div>
             </div>
         </div>
 

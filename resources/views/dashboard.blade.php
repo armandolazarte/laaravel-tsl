@@ -7,6 +7,6 @@
 
     <div class="py-12 ml-8 mr-8">
                 <!-- <x-jet-welcome /> -->
-        <livewire:vehicle-table />
+        
     </div>
 </x-app-layout>

@@ -22,6 +22,8 @@ class CreateJobsTable extends Migration
              $table->string('city')->nullable();
              $table->enum('active', ['Active', 'Inactive'])->default('Active');
              $table->enum('status', ['New', 'In Progress', 'Pending', 'Completed'])->default('New');
+             $table->integer('total_cost');
+             $table->integer('revenue');
              $table->timestamps();
         });
     }
