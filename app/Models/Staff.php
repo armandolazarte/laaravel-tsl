@@ -30,4 +30,9 @@ class Staff extends Model
     {
         return $this->hasMany(Timesheet::class);
     }
+
+    public function nok()
+    {
+        return $this->hasMany(Nok::class);
+    }
 }

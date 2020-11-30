@@ -1,7 +1,7 @@
 <div class="py-12 ml-8 mr-8">
-<h1 class="text-2xl font-semibold text-gray-900">Staff</h1>
+    <h1 class="text-2xl font-semibold text-gray-900">Staff</h1>
     <div class="py-4">
-    <div class="flex items-center mb-8">
+        <div class="flex items-center mb-8">
             <div>
                 <x-button.primary wire:click="create">
                     <x-icon.plus /> Create Staff
@@ -91,15 +91,15 @@
                     </x-table.row>
                     @endif
                     @forelse ($staff as $person)
-                    <x-table.row
-                        class="{{ $person->id % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}"
-                        wire:key="row-{{ $person->id}}">
+                    <x-table.row class="{{ $person->id % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}" wire:key="row-{{ $person->id}}">
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $person->id }}" />
                         </x-table.cell>
 
                         <x-table.cell>
+                            <a href="{{ route('staff-details', $person->id) }}">
                                 {{$person->name}}
+                            </a>
                         </x-table.cell>
 
                         <x-table.cell>
@@ -112,9 +112,9 @@
                             {{$person->email}}
                         </x-table.cell>
                         <x-table.cell>
-                            {{$person->address}}<br/>
-                            @isset($person->suburb) {{$person->suburb}}<br/>@endisset
-                            @isset($person->city) {{$person->city}}<br/>@endisset
+                            {{$person->address}}<br />
+                            @isset($person->suburb) {{$person->suburb}}<br />@endisset
+                            @isset($person->city) {{$person->city}}<br />@endisset
                         </x-table.cell>
                         <x-table.cell>
                             <x-button.link wire:click="edit({{ $person->id }})">Edit</x-button.link>
@@ -146,7 +146,7 @@
             </x-slot>
 
 
-        </x-modal.dialog>
+            </x-modal.dialog>
     </form>
 
     <form wire:submit.prevent="save" action="">

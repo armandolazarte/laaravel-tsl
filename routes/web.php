@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\EditTransaction;
 use App\Http\Controllers\FileController;
 use App\Http\Livewire\CreateTransaction;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\InvoiceController;
 
 /*
@@ -38,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('transactions/create', CreateTransaction::class)->name('create-transaction');
     Route::get('transactions/edit/{id}', EditTransaction::class)->name('edit-transaction');
     Route::get('vehicle/{id}', VehicleDetails::class)->name('vehicle-details');
+    Route::get('staff/{id}', [StaffController::class, 'show'])->name('staff-details');
 
     Route::get('/dashboard', function () {
         return view('dashboard');

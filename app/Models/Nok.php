@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Nok extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class);
+    }
 }

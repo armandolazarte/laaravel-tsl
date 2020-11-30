@@ -23,6 +23,7 @@ class NokFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'staff_id' => 1,
             'phone' => 1232213342,
             'address' => $this->faker->streetAddress,
             'suburb' => $this->faker->state,
