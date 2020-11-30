@@ -91,8 +91,9 @@
                     </x-table.row>
                     @endif
                     @forelse ($staff as $person)
-                    <x-table.row wire:key="row-{{ $person->id}}">
-
+                    <x-table.row
+                        class="{{ $person->id % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}"
+                        wire:key="row-{{ $person->id}}">
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $person->id }}" />
                         </x-table.cell>
