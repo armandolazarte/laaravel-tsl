@@ -24,9 +24,7 @@ class CreateStaffTable extends Migration
             $table->string('address');
             $table->string('suburb');
             $table->string('city');
-            $table->decimal('rate');
-            $table->string('next_of_kin');
-            $table->integer('nok_phone');
+            $table->decimal('rate')->nullable();
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@
     <div class="flex items-center mb-8">
             <div>
                 <x-button.primary wire:click="create">
-                    <x-icon.plus /> Create timesheets
+                    <x-icon.plus /> Create Staff
                 </x-button.primary>
             </div>
             <div class="ml-2">
@@ -66,9 +66,11 @@
                     <x-table.heading class="pr-0 w-8">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('rego')" :direction="$sorts['rego'] ?? null" class="w-full">Rego</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('make')" :direction="$sorts['make'] ?? null">Make</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('model')" :direction="$sorts['model'] ?? null">Model</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('name')" :direction="$sorts['name'] ?? null">Name</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('position')" :direction="$sorts['position'] ?? null">Position</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('email')" :direction="$sorts['email'] ?? null">Email</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('phone')" :direction="$sorts['phone'] ?? null">Phone</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('address')" :direction="$sorts['address'] ?? null">Address</x-table.heading>
 
                     <x-table.heading></x-table.heading>
                 </x-slot>
@@ -100,10 +102,18 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            {{$person->email}}
+                            {{$person->position}}
                         </x-table.cell>
                         <x-table.cell>
                             {{$person->phone}}
+                        </x-table.cell>
+                        <x-table.cell>
+                            {{$person->email}}
+                        </x-table.cell>
+                        <x-table.cell>
+                            {{$person->address}}<br/>
+                            @isset($person->suburb) {{$person->suburb}}<br/>@endisset
+                            @isset($person->city) {{$person->city}}<br/>@endisset
                         </x-table.cell>
                         <x-table.cell>
                             <x-button.link wire:click="edit({{ $person->id }})">Edit</x-button.link>
