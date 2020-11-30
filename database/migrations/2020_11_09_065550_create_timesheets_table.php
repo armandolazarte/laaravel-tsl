@@ -16,6 +16,7 @@ class CreateTimesheetsTable extends Migration
         Schema::create('timesheets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('staff_id')->constrained('staff');
+            $table->foreignId('job_id')->constrained('jobs');
             $table->timestamp('started_at');
             $table->timestamp('stopped_at')->default(null)->nullable();
             $table->decimal('morning_break')->nullable();
