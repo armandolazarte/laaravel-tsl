@@ -5,9 +5,19 @@
         </h2>
     </x-slot>
 
+    <div
+        x-data="{
+            detailsOpen: true,
+        }"
+        class="h-screen flex ">
+        <x-details.sidebar>
+            <x-details.sidebar-item label="Dashboard" x-bind:selected="detailsOpen"/>
+            <x-details.sidebar-item label="Timesheets" selected="false"/>
+            <x-details.sidebar-item label="Notes and Files" selected="false"/>
+            <x-details.sidebar-item label="Reports" selected="false"/>
+        </x-details.sidebar>
 
-    <div>
-        <div class="bg-white shadow overflow-hidden w-5/6 mx-auto mt-10 sm:rounded-lg">
+        <div x-show="detailsOpen" class="bg-white shadow overflow-hidden w-5/6 mx-10 mt-10 sm:rounded-lg">
             <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">
                     Staff Details

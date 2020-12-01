@@ -1,6 +1,8 @@
 
 
-@props(['label' => ''])
+@props([
+    'label' => ''
+])
 
 <div x-data="{ open: false }" @keydown.window.escape="open = false" @click.away="open = false" class="relative inline-block text-left z-10">
     <div>
