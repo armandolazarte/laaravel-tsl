@@ -1,84 +1,52 @@
 <div class="antialiased sans-serif min-h-screen bg-white w-full" style="min-height: 900px">
     <div class="border-t-8 border-gray-700 h-2"></div>
     <div class="mx-auto py-6 px-20">
-        <div class="flex justify-between">
-            <h2 class="text-2xl font-bold mb-6 pb-2 tracking-wider uppercase">Invoice</h2>
-            <div>
-                <div class="relative mr-4 inline-block">
-                    <div class="text-gray-500 cursor-pointer w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-300 inline-flex items-center justify-center" @mouseenter="showTooltip = true" @mouseleave="showTooltip = false" @click="printInvoice()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                            <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" />
-                            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" />
-                            <rect x="7" y="13" width="10" height="8" rx="2" />
-                        </svg>
-                    </div>
-                    <div x-show.transition="showTooltip" class="z-40 shadow-lg text-center w-32 block absolute right-0 top-0 p-2 mt-12 rounded-lg bg-gray-800 text-white text-xs">
-                        Print this invoice!
-                    </div>
-                </div>
-
-                <div class="relative inline-block">
-                    <div class="text-gray-500 cursor-pointer w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-300 inline-flex items-center justify-center" @mouseenter="showTooltip2 = true" @mouseleave="showTooltip2 = false" @click="window.location.reload()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                            <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -5v5h5" />
-                            <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 5v-5h-5" />
-                        </svg>
-                    </div>
-                    <div x-show.transition="showTooltip2" class="z-40 shadow-lg text-center w-32 block absolute right-0 top-0 p-2 mt-12 rounded-lg bg-gray-800 text-white text-xs">
-                        Reload Page
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="flex mb-8 justify-between">
             <div class="w-2/4">
-                <div class="mb-2 md:mb-1 md:flex items-center">
-                    <label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Invoice No.</label>
-                    <span class="mr-4 inline-block hidden md:block">:</span>
-                    <div class="flex-1">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" placeholder="eg. #INV-100001" x-model="invoiceNumber">
+                <div class="mb-2 pb-2 md:mb-1 md:flex items-center">
+                    <label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Invoice Title</label>
+                    <span class="mr-4 inline-block md:block">:</span>
+                    <div class="w-64">
+                        <x-input.text wire:model="transaction.title" class="h-8 px-2" />
                     </div>
                 </div>
-
-                <div class="mb-2 md:mb-1 md:flex items-center">
+                <div class="mb-2 pb-2 md:mb-1 md:flex items-center">
                     <label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Invoice Date</label>
-                    <span class="mr-4 inline-block hidden md:block">:</span>
-                    <div class="flex-1">
-                        <date-picker v-model="newInvoice.invoice_date" format="DD/MM/YYYY" valueType="format" placeholder="Select invoice date"></date-picker>
+                    <span class="mr-4 inline-block md:block">:</span>
+                    <div class="w-64">
+                        <x-input.date wire:model="transaction.date" id="invoice-date" placeholder="DD/MM/YYYY" />
                     </div>
                 </div>
 
-                <div class="mb-2 md:mb-1 md:flex items-center">
+                <div class="mb-2 pb-2 md:mb-1 md:flex items-center">
                     <label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Due date</label>
-                    <span class="mr-4 inline-block hidden md:block">:</span>
-                    <div class="flex-1">
-                        <date-picker v-model="newInvoice.due_date" format="DD/MM/YYYY" valueType="format" placeholder="Select due date"></date-picker>
+                    <span class="mr-4 inline-block md:block">:</span>
+                    <div class="w-64">
+                        <x-input.date wire:model="transaction.due_date" id="invoice-due_date" placeholder="DD/MM/YYYY" />
                     </div>
                 </div>
-            </div>
-            <div>
-                <div class="w-32 h-32 mb-1 border rounded-lg overflow-hidden relative bg-gray-100">
-                    <img id="image" class="object-cover w-full h-32" src="https://placehold.co/300x300/e2e8f0/e2e8f0" />
 
-                    <div class="absolute top-0 left-0 right-0 bottom-0 w-full block cursor-pointer flex items-center justify-center" onClick="document.getElementById('fileInput').click()">
-                        <button type="button" style="background-color: rgba(255, 255, 255, 0.65)" class="hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 text-sm border border-gray-300 rounded-lg shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-camera" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                                <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
-                                <circle cx="12" cy="13" r="3" />
-                            </svg>
-                        </button>
+                <div class="mb-2 pb-2 md:mb-1 md:flex items-center">
+                    <label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Supplier</label>
+                    <span class="mr-4 inline-block md:block">:</span>
+                    <div class="w-64">
+                        <select class="w-full" id="supplierSelect" tabindex="-1" aria-hidden="true">
+                            <option selected></option>
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{$supplier->id}}">{{$supplier->company_name}}</option>
+                            @endforeach
+                        </select>
                     </div>
+
                 </div>
             </div>
         </div>
         @json($transactionItems)
         <table>
-            <thead class="bg-gray-100 rounded-md px-2 py-6">
-                <tr class="text-left ">
+            <thead class="bg-gray-100 rounded-md px-2 py-8">
+                <tr class="text-left">
+                    <th class="px-2"></th>
                     <th>Job</th>
                     <th>Vehicle</th>
                     <th class="p1">Description</th>
@@ -93,8 +61,10 @@
             <tbody>
                 @foreach ($transactionItems as $index => $transactionItem)
                 <tr class="h-12 {{ $index % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}">
+                    <td class="px-2">{{$index + 1}}</td>
                     <td wire:ignore class="w-2/12">
                         <select class="w-full" id="selectJob{{$index}}" tabindex="-1" aria-hidden="true">
+                            <option selected></option>
                             @foreach ($jobs as $job)
                             <option value="{{$job->id}}">{{$job->job_ref}} - {{$job->job_description}}</option>
                             @endforeach
@@ -102,6 +72,7 @@
                     </td>
                     <td wire:ignore class="w-2/12 py-2 px-1">
                         <select class="w-full" id="selectVehicle{{$index}}">
+                            <option selected></option>
                             @foreach ($vehicles as $vehicle)
                             <option value="{{$vehicle->id}}">{{$vehicle->make}}</option>
                             @endforeach
@@ -138,24 +109,26 @@
                 <script>
                     $(document).ready(function() {
                         $('#selectJob{{$index}}').select2({
-                            placeholder: 'Select an option',
+                            placeholder: 'Select a Job',
                         });
 
                         $('#selectVehicle{{$index}}').select2({
-                            placeholder: 'Select an option',
+                            placeholder: 'Select a Vehicle',
                         });
 
                         $(document).on('change', '#selectJob{{$index}}', function(e) {
                             console.log(e.target.id)
                             const index = e.target.id.split('selectJob')[1]
                             const value = e.target.value
-                            @this.call('updateItems', [index, 'job_id', value]);
+                            //@this.call('updateItems', [index, 'job_id', value]);
+                            @this.set('items.{{$index}}.job_id', value);
                         });
 
                         $(document).on('change', '#selectVehicle{{$index}}', function(e) {
                             const index = e.target.id.split('selectVehicle')[1]
                             const value = e.target.value
-                            @this.call('updateItems', [index, 'vehicle_id', value]);
+                            //@this.call('updateItems', [index, 'vehicle_id', value]);
+                            @this.set('items.{{$index}}.vehicle_id', value);
                         });
                     });
                     document.addEventListener("livewire:load", function(event) {
@@ -171,7 +144,7 @@
             </tbody>
         </table>
 
-        <button class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 text-sm border border-gray-300 rounded shadow-sm" wire:click="addLineItem">
+        <button class="bg-white hover:bg-gray-100 text-gray-700 font-semibold mt-6 py-2 px-4 text-sm border border-gray-300 rounded shadow-sm" wire:click="addLineItem">
             Add Invoice Items
         </button>
 
@@ -318,9 +291,9 @@
             </div>
         </div>
         <div>
-        <x-input.search-dropdown :data="$suppliers">
+            <x-input.search-dropdown :data="$suppliers">
 
-        </x-input.search-dropdown>
+            </x-input.search-dropdown>
         </div>
         <div class="flex items-center justify-end mb-8">
             <div>
@@ -333,3 +306,15 @@
 
 
 </div>
+
+@push('scripts')
+
+<script>
+    $(document).ready(function() {
+        $('#supplierSelect').select2({
+            placeholder: 'Select an option',
+        });
+    });
+</script>
+
+@endpush

@@ -16,7 +16,11 @@ class CreateTransaction extends Component
     public $second = '';
     public $third = '';
     public $property = '';
-    public $transaction = [];
+    public $transaction = [
+        'title' => '',
+        'date' => null,
+        'due_date' => null,
+    ];
     public $transactionItems = [
         [
             'job_id' => '',

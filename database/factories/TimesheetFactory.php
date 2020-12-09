@@ -23,6 +23,7 @@ class TimesheetFactory extends Factory
     {
         return [
             'staff_id' => $this->faker->randomElement([2, 3, 4, 5]),
+            'job_id' => $this->faker->randomElement([2, 3, 4, 5]),
             'started_at' => $this->faker->dateTimeThisMonth(),
             'stopped_at' => $this->faker->dateTimeThisMonth(),
             'morning_break' => $this->faker->randomElement([0, 0.25]),

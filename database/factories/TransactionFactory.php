@@ -25,7 +25,7 @@ class TransactionFactory extends Factory
     {
         return [
             'title' => 'Payment to ' . $this->faker->name,
-            'supplier' => $this->faker->randomElement([1,2,3,5,7,9,11,13,15,12,16,22,44,55,66,33,76,43,79]),
+            'supplier' => $this->faker->randomElement([1,2,3,5,7,9]),
             'amount' => rand(10, 500),
             'status' => Arr::random(['success', 'processing', 'failed']),
             'date' => Carbon::now()->subDays(rand(1, 365))->startOfDay(),
