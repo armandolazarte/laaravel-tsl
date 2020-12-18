@@ -1,7 +1,6 @@
 <div class="antialiased sans-serif min-h-screen bg-white w-full" style="min-height: 900px">
     <div class="border-t-8 border-gray-700 h-2"></div>
     <div class="mx-auto py-6 px-20">
-
         <div class="flex mb-8 justify-between">
             <div class="w-2/4">
                 <div class="mb-2 pb-2 md:mb-1 md:flex items-center">
@@ -27,14 +26,14 @@
                     </div>
                 </div>
 
-                <div class="mb-2 pb-2 md:mb-1 md:flex items-center">
+                <div id="supplier-select" class="mb-2 pb-2 md:mb-1 md:flex items-center">
                     <label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Supplier</label>
                     <span class="mr-4 inline-block md:block">:</span>
-                    <div class="w-64">
+                    <div wire:ignore class="w-64">
                         <select class="w-full" id="supplierSelect" tabindex="-1" aria-hidden="true">
                             <option selected></option>
                             @foreach ($suppliers as $supplier)
-                                <option value="{{$supplier->id}}">{{$supplier->company_name}}</option>
+                            <option value="{{$supplier->id}}">{{$supplier->company_name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -43,7 +42,10 @@
             </div>
         </div>
         @json($transactionItems)
-        <table>
+        @php
+        $total = 0;
+        @endphp
+        <table id="invoice-items-table">
             <thead class="bg-gray-100 rounded-md px-2 py-8">
                 <tr class="text-left">
                     <th class="px-2"></th>
@@ -58,6 +60,7 @@
                     <th></th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach ($transactionItems as $index => $transactionItem)
                 <tr class="h-12 {{ $index % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}">
@@ -106,8 +109,10 @@
                         </a>
                     </td>
                 </tr>
+
+
                 <script>
-                    $(document).ready(function() {
+                    $('#invoice-items-table').ready(function() {
                         $('#selectJob{{$index}}').select2({
                             placeholder: 'Select a Job',
                         });
@@ -121,14 +126,14 @@
                             const index = e.target.id.split('selectJob')[1]
                             const value = e.target.value
                             //@this.call('updateItems', [index, 'job_id', value]);
-                            @this.set('items.{{$index}}.job_id', value);
+                            @this.set('transactionItems.{{$index}}.job_id', value);
                         });
 
                         $(document).on('change', '#selectVehicle{{$index}}', function(e) {
                             const index = e.target.id.split('selectVehicle')[1]
                             const value = e.target.value
                             //@this.call('updateItems', [index, 'vehicle_id', value]);
-                            @this.set('items.{{$index}}.vehicle_id', value);
+                            @this.set('transactionItems.{{$index}}.vehicle_id', value);
                         });
                     });
                     document.addEventListener("livewire:load", function(event) {
@@ -148,161 +153,32 @@
             Add Invoice Items
         </button>
 
-        <div class="py-2 ml-auto mt-5 w-full sm:w-2/4 lg:w-1/4">
-            <div class="flex justify-between mb-3">
-                <div class="text-gray-800 text-right flex-1">Total incl. GST</div>
-                <div class="text-right w-40">
-                    <div class="text-gray-800 font-medium" x-html="netTotal"></div>
-                </div>
-            </div>
-            <div class="flex justify-between mb-4">
-                <div class="text-sm text-gray-600 text-right flex-1">GST(18%) incl. in Total</div>
-                <div class="text-right w-40">
-                    <div class="text-sm text-gray-600" x-html="totalGST"></div>
-                </div>
-            </div>
 
-            <div class="py-2 border-t border-b">
-                <div class="flex justify-between">
-                    <div class="text-xl text-gray-600 text-right flex-1">Amount due</div>
-                    <div class="text-right w-40">
-                        <div class="text-xl text-gray-800 font-bold" x-html="netTotal"></div>
+        <div class="py-2 ">
+            <div class="flex justify-between">
+                <div class="text-xl text-gray-600 text-right flex-1">Invoice Total</div>
+                <div class="text-right w-40">
+                    <div class="text-xl text-gray-800 font-bold">
+                        @isset($transactionItems)
+                        ${{collect($transactionItems)->sum(function ($item) {
+                            $cost = (int)$item['itemCost'];
+                            return $cost;
+                        })}}
+                        @endisset
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Print Template -->
-        <div id="js-print-template" x-ref="printTemplate" class="hidden">
-            <div class="mb-8 flex justify-between">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6 pb-2 tracking-wider uppercase">Invoice</h2>
-
-                    <div class="mb-1 flex items-center">
-                        <label class="w-32 text-gray-800 block font-bold text-xs uppercase tracking-wide">Invoice No.</label>
-                        <span class="mr-4 inline-block">:</span>
-                        <div x-text="invoiceNumber"></div>
-                    </div>
-
-                    <div class="mb-1 flex items-center">
-                        <label class="w-32 text-gray-800 block font-bold text-xs uppercase tracking-wide">Invoice Date</label>
-                        <span class="mr-4 inline-block">:</span>
-                        <div x-text="invoiceDate"></div>
-                    </div>
-
-                    <div class="mb-1 flex items-center">
-                        <label class="w-32 text-gray-800 block font-bold text-xs uppercase tracking-wide">Due date</label>
-                        <span class="mr-4 inline-block">:</span>
-                        <div x-text="invoiceDueDate"></div>
-                    </div>
-
-                </div>
-                <div class="pr-5">
-                    <div class="w-32 h-32 mb-1 overflow-hidden">
-                        <img id="image2" class="object-cover w-20 h-20" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex justify-between mb-10">
-                <div class="w-1/2">
-                    <label class="text-gray-800 block mb-2 font-bold text-xs uppercase tracking-wide">Bill/Ship To:</label>
-                    <div>
-                        <div x-text="billing.name"></div>
-                        <div x-text="billing.address"></div>
-                        <div x-text="billing.extra"></div>
-                    </div>
-                </div>
-                <div class="w-1/2">
-                    <label class="text-gray-800 block mb-2 font-bold text-xs uppercase tracking-wide">From:</label>
-                    <div>
-                        <div x-text="from.name"></div>
-                        <div x-text="from.address"></div>
-                        <div x-text="from.extra"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap -mx-1 border-b py-2 items-start">
-                <div class="flex-1 px-1">
-                    <p class="text-gray-600 uppercase tracking-wide text-xs font-bold">Description</p>
-                </div>
-
-                <div class="px-1 w-32 text-right">
-                    <p class="text-gray-600 uppercase tracking-wide text-xs font-bold">Units</p>
-                </div>
-
-                <div class="px-1 w-32 text-right">
-                    <p class="leading-none">
-                        <span class="block uppercase tracking-wide text-xs font-bold text-gray-600">Unit Price</span>
-                        <span class="font-medium text-xs text-gray-500">(Incl. GST)</span>
-                    </p>
-                </div>
-
-                <div class="px-1 w-32 text-right">
-                    <p class="leading-none">
-                        <span class="block uppercase tracking-wide text-xs font-bold text-gray-600">Amount</span>
-                        <span class="font-medium text-xs text-gray-500">(Incl. GST)</span>
-                    </p>
-                </div>
-            </div>
-            <template :key="">
-                <div class="flex flex-wrap -mx-1 py-2 border-b">
-                    <div class="flex-1 px-1">
-                        <p class="text-gray-800" x-text="invoice.name"></p>
-                    </div>
-
-                    <div class="px-1 w-32 text-right">
-                        <p class="text-gray-800" x-text="invoice.qty"></p>
-                    </div>
-
-                    <div class="px-1 w-32 text-right">
-                        <p class="text-gray-800" x-text="numberFormat(invoice.rate)"></p>
-                    </div>
-
-                    <div class="px-1 w-32 text-right">
-                        <p class="text-gray-800" x-text="numberFormat(invoice.total)"></p>
-                    </div>
-                </div>
-            </template>
-
-            <div class="py-2 ml-auto mt-20" style="width: 320px">
-                <div class="flex justify-between mb-3">
-                    <div class="text-gray-800 text-right flex-1">Total incl. GST</div>
-                    <div class="text-right w-40">
-                        <div class="text-gray-800 font-medium" x-html="netTotal"></div>
-                    </div>
-                </div>
-                <div class="flex justify-between mb-4">
-                    <div class="text-sm text-gray-600 text-right flex-1">GST(18%) incl. in Total</div>
-                    <div class="text-right w-40">
-                        <div class="text-sm text-gray-600" x-html="totalGST"></div>
-                    </div>
-                </div>
-
-                <div class="py-2 border-t border-b">
-                    <div class="flex justify-between">
-                        <div class="text-xl text-gray-600 text-right flex-1">Amount due</div>
-                        <div class="text-right w-40">
-                            <div class="text-xl text-gray-800 font-bold" x-html="netTotal"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="flex items-center justify-end mb-8 mt-12">
         <div>
-            <x-input.search-dropdown :data="$suppliers">
-
-            </x-input.search-dropdown>
-        </div>
-        <div class="flex items-center justify-end mb-8">
-            <div>
-                <x-button.primary wire:click="create">
-                    <x-icon.plus /> Create Purchase Order
-                </x-button.primary>
-            </div>
+            <x-button.primary wire:click="create">
+                <x-icon.plus /> Create Invoice
+            </x-button.primary>
         </div>
     </div>
+    </div>
+
+</div>
 
 
 </div>
@@ -310,10 +186,18 @@
 @push('scripts')
 
 <script>
-    $(document).ready(function() {
+    $('#supplier-select').ready(function() {
         $('#supplierSelect').select2({
-            placeholder: 'Select an option',
+            placeholder: 'Select a supplier',
         });
+
+        $(document).on('change', '#supplierSelect', function(e) {
+            //const index = e.target.id.split('selectVehicle')[1]
+            const value = e.target.value
+            console.log(value)
+            @this.set('transaction.supplier_id', value);
+        });
+
     });
 </script>
 

@@ -19,6 +19,8 @@ class StaffTable extends Component
     public $showFilters = false;
     public $editing;
     public $successMessage;
+    public $showRight = false;
+    public $selectedPerson;
 
     //protected $queryString = ['sortField', 'sortDirection'];
 
@@ -51,6 +53,13 @@ class StaffTable extends Component
     {
         $this->editing = Staff::make([]);
         $this->showEditModal = true;
+    }
+
+    public function open($person)
+    {
+        //dd($person);
+        $this->showRight = true;
+        $this->selectedPerson = $person;
     }
 
 

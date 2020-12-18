@@ -18,6 +18,7 @@ class CreateTransaction extends Component
     public $property = '';
     public $transaction = [
         'title' => '',
+        'supplier_id' => null,
         'date' => null,
         'due_date' => null,
     ];
@@ -30,7 +31,7 @@ class CreateTransaction extends Component
             'purchaseCode' => '',
             'quantity' => '',
             'unit' => '',
-            'itemCost' => '',
+            'itemCost' => null,
         ]
     ];
 

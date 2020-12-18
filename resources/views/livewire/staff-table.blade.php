@@ -1,4 +1,5 @@
 <div class="py-12 ml-8 mr-8">
+
     <h1 class="text-2xl font-semibold text-gray-900">Staff</h1>
     <div class="py-4">
         <div class="flex items-center mb-8">
@@ -49,6 +50,7 @@
                 </div>
             </div>
         </div>
+
         <div>
             @if ($showFilters)
             <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
@@ -97,11 +99,8 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <a href="{{ route('staff-details', $person->id) }}">
-                                {{$person->name}}
-                            </a>
+                            <x-button.link wire:click="open({{ $person->id }})">{{$person->name}}</x-button.link>
                         </x-table.cell>
-
                         <x-table.cell>
                             {{$person->position}}
                         </x-table.cell>
@@ -196,5 +195,7 @@
 
         </x-modal.dialog>
     </form>
-
+        @if ($showRight)
+            <x-staff-slideover staff={{$selectedPerson}} />
+        @endif
 </div>
