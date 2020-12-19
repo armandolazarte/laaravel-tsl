@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::get('/staff', \App\Http\Livewire\StaffTable::class)->name('staff');
     Route::get('/timesheets', \App\Http\Livewire\TimesheetTable::class)->name('timesheets');
+    Route::get('/clients', \App\Http\Livewire\ClientTable::class)->name('clients');
 
     Route::get('/vehicles', \App\Http\Livewire\VehicleTable::class)->name('vehicles');
     Route::get('/transactions', \App\Http\Livewire\TransactionTable::class)->name('transactions');

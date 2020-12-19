@@ -20,7 +20,7 @@ class ClientTable extends Component
     public $editing;
     public $successMessage;
     public $showRight = false;
-    public $selectedPerson;
+    public $selectedClient;
 
     //protected $queryString = ['sortField', 'sortDirection'];
 
@@ -56,11 +56,11 @@ class ClientTable extends Component
         $this->showEditModal = true;
     }
 
-    public function open($person)
+    public function open($client)
     {
         //dd($person);
         $this->showRight = true;
-        $this->selectedPerson = $person;
+        $this->selectedClient = $client;
     }
 
 
@@ -105,7 +105,7 @@ class ClientTable extends Component
         }
 
         return view('livewire.client-table', [
-            'staff' => $this->rows
+            'clients' => $this->rows
         ]);
 
     }
