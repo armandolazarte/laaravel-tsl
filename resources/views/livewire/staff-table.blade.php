@@ -1,7 +1,7 @@
 <div class="py-12 ml-8 mr-8">
 
     <h1 class="text-2xl font-semibold text-gray-900">Staff</h1>
-    <div class="py-4">
+    <div class="py-4 scrollbar-thumb:bg-red-500 scrollbar-track:rounded">
         <div class="flex items-center mb-8">
             <div>
                 <x-button.primary wire:click="create">
@@ -43,9 +43,6 @@
                         <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" class="flex items-center space-x-2">
                             <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
                         </x-dropdown.item>
-                        <x-dropdown.item type="button" wire:click="$toggle('showApproveModal')" class="flex items-center space-x-2">
-                            <x-icon.plus class="text-cool-gray-400" /> <span>Approve</span>
-                        </x-dropdown.item>
                     </x-dropdown>
                 </div>
             </div>
@@ -61,7 +58,7 @@
             @endif
         </div>
 
-        <div class="flex-col space-y-4">
+        <div id="journal-scroll" class="flex-col space-y-4 scrollbar-thumb:bg-red-500 scrollbar-track:rounded">
 
             <x-table>
                 <x-slot name="head">
@@ -94,24 +91,25 @@
                     @endif
                     @forelse ($staff as $person)
                     <x-table.row class="{{ $person->id % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}" wire:key="row-{{ $person->id}}">
+
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $person->id }}" />
                         </x-table.cell>
 
-                        <x-table.cell>
-                            <x-button.link wire:click="open({{ $person->id }})">{{$person->name}}</x-button.link>
+                        <x-table.cell wire:click="open({{ $person->id }})">
+                            {{$person->name}}
                         </x-table.cell>
-                        <x-table.cell>
+                        <x-table.cell wire:click="open({{ $person->id }})">
                             {{$person->position}}
                         </x-table.cell>
-                        <x-table.cell>
+                        <x-table.cell wire:click="open({{ $person->id }})">
                             {{$person->phone}}
                         </x-table.cell>
-                        <x-table.cell>
+                        <x-table.cell wire:click="open({{ $person->id }})">
                             {{$person->email}}
                         </x-table.cell>
-                        <x-table.cell>
-                            {{$person->address}}<br />
+                        <x-table.cell wire:click="open({{ $person->id }})">
+                            {{$person->address}},
                             @isset($person->suburb) {{$person->suburb}}<br />@endisset
                             @isset($person->city) {{$person->city}}<br />@endisset
                         </x-table.cell>

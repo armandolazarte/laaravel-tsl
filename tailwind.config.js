@@ -13,11 +13,17 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
         },
+        height: {
+            xxl: '400rem',
+        },
+        maxHeight: {
+            '1/4': '50%',
+        }
     },
 
     variants: {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
     },
 
-    plugins: [require('@tailwindcss/ui')],
+    plugins: [require('@tailwindcss/ui'), require('tailwind-scrollbar')],
 };

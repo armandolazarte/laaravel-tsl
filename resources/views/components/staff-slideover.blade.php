@@ -1,33 +1,14 @@
-<div
-    x-data="{ open: @entangle('showRight') }"
-    x-cloak
-    @keydown.window.escape="open = false;"
-    x-transition:enter-start="translate-x-full"
-    x-transition:enter-end="translate-x-0"
-
-    x-transition:leave-start="translate-x-0"
-    x-transition:leave-end="translate-x-full"
-    class="fixed inset-0 overflow-hidden transform transition ease-in-out duration-500 sm:duration-700">
+<div x-data="{ open: @entangle('showRight') }" x-cloak @keydown.window.escape="open = false;" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="fixed inset-0 overflow-hidden transform transition ease-in-out duration-500 sm:duration-700 z-50">
 
     <div class="absolute inset-0 overflow-hidden">
         <section @click.away="open = false" class="absolute inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
-            <!--
-        Slide-over panel, show/hide based on slide-over state.
-
-        Entering: "transform transition ease-in-out duration-500 sm:duration-700"
-          From: "translate-x-full"
-          To: "translate-x-0"
-        Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
-          From: "translate-x-0"
-          To: "translate-x-full"
-      -->
             <div class="w-screen max-w-6xl">
                 <div class="h-full flex flex-col space-y-6 py-6 bg-white shadow-xl overflow-y-scroll">
                     <header class="px-4 sm:px-6">
                         <div class="flex items-start justify-between space-x-3">
-                            <h2 class="text-lg text-center leading-7 font-medium text-gray-900">
+                            <h1 class="text-lg text-center leading-7 font-medium text-gray-900">
                                 Staff Details
-                            </h2>
+                            </h1>
                             <div class="h-7 flex items-center">
                                 <button @click="open = false" aria-label="Close panel" class="text-gray-400 hover:text-gray-500 outline-none transition ease-in-out duration-150">
                                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -130,8 +111,74 @@
                             </dl>
                         </div>
                     </div>
+                    @php
+                        $tableHeight = '';
+
+                        if(count($staff->timesheets) > 0) {
+                            $tableHeight = '400px';
+                        } else {
+                            $tableHeight = '120px';
+                        }
+                    @endphp
+                    <h2 class="text-lg text-center leading-7 font-medium text-gray-900">
+                                Staff Timesheets
+                            </h2>
+                    <div class="px-4 w-full mx-auto">
+
+                            <x-table-details height={{$tableHeight}}>
+                            <x-slot name="head">
+                                <x-table.heading-details>Start Time</x-table.heading>
+                                <x-table.heading-details>Finish Time</x-table.heading>
+                                    <x-table.heading-details>Morning Break</x-table.heading>
+                                        <x-table.heading-details>Afternoon Break</x-table.heading>
+                                            <x-table.heading-details>Hours</x-table.heading>
+                                                <x-table.heading-details>Comments</x-table.heading>
+                                                    <x-table.heading-details>Approved By</x-table.heading>
+                                                        <x-table.heading-details>Approved Date</x-table.heading>
+                            </x-slot>
+
+                            <x-slot name="body">
+                                @forelse ($staff->timesheets as $timesheet)
+                                <x-table.row class="{{ $timesheet->id % 2 === 0 ? 'bg-white' : 'bg-cool-gray-50' }}">
+                                    <x-table.cell>
+                                        {{$timesheet->started_at}}
+                                    </x-table.cell>
+                                    <x-table.cell>
+                                        {{$timesheet->stopped_at}}
+                                    </x-table.cell>
+                                    <x-table.cell>
+                                        {{$timesheet->morning_break}}
+                                    </x-table.cell>
+                                    <x-table.cell>
+                                        {{$timesheet->afternoon_break}}
+                                    </x-table.cell>
+                                    <x-table.cell>
+                                        {{$timesheet->hours}}
+                                    </x-table.cell>
+                                    <x-table.cell>
+                                        {{$timesheet->comments}}
+                                    </x-table.cell>
+                                    <x-table.cell>
+                                        @isset($timesheet->user->name)
+                                            {{$timesheet->user->name}}
+                                        @endisset
+                                    </x-table.cell>
+                                    <x-table.cell>
+                                        {{ $timesheet->approved_date }}
+                                    </x-table.cell>
+                                </x-table.row>
+
+                                @empty
+                                    <x-table.row>
+                                        <x-table.cell colspan="8">No results found</x-table.cell>
+                                    </x-table.row>
+                                @endforelse
+                            </x-slot>
+                            </x-table>
+                    </div>
                 </div>
             </div>
+
         </section>
     </div>
 </div>

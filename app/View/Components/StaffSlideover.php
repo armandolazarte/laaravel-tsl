@@ -26,6 +26,7 @@ class StaffSlideover extends Component
      */
     public function render()
     {
-        return view('components.staff-slideover', ['staff' => Staff::findOrFail($this->staffID)]);
+        //return view('components.staff-slideover', ['staff' => Staff::findOrFail($this->staffID)->with('timesheets')]);
+        return view('components.staff-slideover', ['staff' => Staff::with('timesheets')->findOrFail($this->staffID)]);
     }
 }
