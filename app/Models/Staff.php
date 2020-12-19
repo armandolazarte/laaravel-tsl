@@ -20,7 +20,7 @@ class Staff extends Model
 
             $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
-                ->orWhere('email', 'like', $term)
+                ->orWhere('contact_name', 'like', $term)
                 ->orWhere('address', 'like', $term);
             });
         });
